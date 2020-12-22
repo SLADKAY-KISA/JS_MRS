@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Examples. Setting a custom placemark image</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--
+        Set your own API-key. Testing key is not valid for other web-sites and services.
+        Get your API-key on the Developer Dashboard: https://developer.tech.yandex.ru/keys/
+    -->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_RU&amp;apikey=OAU9O3HthXtLZDvg5sx~x5n0dULWAPs0qAcCN07W7GOxl-OB26XKy4ONrE1WUcXQw8tZm0Gw1~qZBxJlGUjXT3lKZdg0Nusvpx6m3jNpLh8" type="text/javascript"></script>
+
+	<style>
+        html, body, #map {
+            width: 100%; height: 100%; padding: 0; margin: 0;
+        }
+    </style>
+
+
+
+    <script>
+
+        const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
+      const Item = Struct('marker', 'x', 'y', 'speed')
+      var people = [];
+
+     function randomInRange(min, max) {
+        return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
+      }
+
+
+      function randomizeInteger(min, max) {
+      	if(max == null) {
+    	    max = (min == null ? Number.MAX_SAFE_INTEGER : min);
+      	  min = 0;
+        }
+        min = Math.ceil(min);  // inclusive min
+        max = Math.floor(max); // exclusive max
+  	    if(min > max - 1) {
+    	    throw new Error("Incorrect arguments.");
+        }
+        return min + Math.floor((max - min) * Math.random());
+      }
+
+
+      function setNewPosition(marker, x, y){
+        var latlng = new google.maps.LatLng(x, y);
+        marker.setPosition(latlng);
+      }
+
+
+      function changeMarkerPosition(marker, x, y, speed, direction) {
+        switch(direction){
+          case 1: //right
+            setNewPosition(marker, x+speed, y);
+            break;
+          case 2: //left
+            setNewPosition(marker, x-speed, y);
+            break;
+          case 3: //up
+            setNewPosition(marker, x, y+speed);
+            break;
+          case 4: //down
+            setNewPosition(marker, x, y-speed);
+            break;
+        }
+      }
+
+
+
+
+
+     ymaps.ready(function () {
+        var myMap = new ymaps.Map('map', {
+            center: [55.013186, 82.949248],
+            zoom: 15
+        }),
+
+        // Creating a content layout.
+        MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+            '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+        ),
+        Markers = [];
+        TTR = [];
+        let x;
+        let y;
+        let speed;
+        NumberOfUnit = 10;
+        for (let index = 0; index < NumberOfUnit; index++) {
+            let x = randomInRange(55.021465, 55.012316);
+            let y = randomInRange(82.936089, 82.963985);
+            speed =  0.00001;
+            console.log("x: "+x+" y: "+y);
+        Marker = new ymaps.Placemark([x, y], {
+            hintContent: 'Unit'+index,
+            balloonContent: 'Speed for this unit: '+index
+        }, {
+            /**
+             * Options.
+             * You must specify this type of layout.
+             */
+            iconLayout: 'default#imageWithContent',
+            // Custom image for the placemark icon.
+            iconImageHref: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png',
+            // The size of the placemark.
+            iconImageSize: [80, 80],
+            /**
+             * The offset of the upper left corner of the icon relative
+             * to its "tail" (the anchor point).
+             */
+            iconImageOffset: [-24, -24],
+            // Offset of the layer with content relative to the layer with the image.
+            iconContentOffset: [15, 15],
+            // Content layout.
+            iconContentLayout: MyIconContentLayout
+        });
+            TTR.push(Item(Marker, x, y, speed));
+            Markers.push(Marker);
+            myMap.geoObjects.add(Markers[index]);
+        }
+        console.log(Markers);
+    
+
+        let direction1 = [];
+        for (var i = 0; i < NumberOfUnit; i++) {
+          direction1.push(randomizeInteger(1,5));
+        }
+        var t1 = 0;
+        console.log("DIRECTION1"+direction1);
+        var interval1 =  setInterval(function() {
+          console.log("tr\n");
+          t1++;
+          if(t1 == 300){
+            clearInterval(interval1);
+          }
+          
+          for (var i = 0; i < NumberOfUnit; i++) {
+            if(t1 % 30 == 0){
+                direction1[i] = randomizeInteger(1,5);
+            }
+            console.log("i: "+i+"\tdir:"+direction1[i]);
+            changeMarkerPosition(TTR[i].marker, TTR[i].marker.getPosition().lat(), TTR[i].marker.getPosition().lng(), TTR[i].speed, direction1[i]);
+          }
+         }, 100); //Every 1000ms = 1sec
+
+
+
+
+});
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
