@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    		<title>People&Roads</title>
+    		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    		<script
+      		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UyUT2h5LiCC2ClU7WUqoQSGq5EPQOSQ&callback=initMap&libraries=&v=weekly"
+      		defer
+		    ></script>
+		    
+    		<style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+     			#map {
+        			height: 100%;
+			/* width: 80%; */
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+
+    <script>
+      const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
+      const Item = Struct('marker', 'x', 'y', 'speed')
+      var people = [];
+	  let markers = [];
+	  var interval1;
+	  var flag = 0;
+	  const chicago = { lat: 55.014690, lng: 82.959608 };
+
+      /**
+
+
+      */
+      function randomInRange(min, max) {
+        return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
+      } 
+
+      /**
+         * 
+         * 
+         */
+      function randomizeInteger(min, max) {
+      	if(max == null) {
+    	    max = (min == null ? Number.MAX_SAFE_INTEGER : min);
+      	  min = 0;
+        }
+        min = Math.ceil(min);  // inclusive min
+        max = Math.floor(max); // exclusive max
+  	    if(min > max - 1) {
+    	    throw new Error("Incorrect arguments.");
+        }
+        return min + Math.floor((max - min) * Math.random());
+      }
+
+      /**
+       * Функция установки маркера на новую позицию с координатами широты(х) и долготы(у)
+       * 
+       * @param {Object} marker - указатель на структуру, содержащую 
+       * @param {number} x - широта, в которую надо переместить маркер
+       * @param {number} y - долгота, в которую надо переместить маркер
+       * 
+       * 
+       * 
+       * function set(ing?) new coordinates for one unit (marker) at map
+       * @param {Object} marker - 
+       * @param {number} x - lalitude
+       * @param {number} y - longitude
+       */
+      function setNewPosition(marker, x, y){
+        var latlng = new google.maps.LatLng(x, y);
+        marker.setPosition(latlng);
+      }
+
+      /**
+       * Функция изменения позиции маркера на карте, в зависимости от выбранного направления
+       * 
+       * @param {Object} marker - указатель на структуру
+       * @param {number} x - широта, в которой находится маркер
+       * @param {number} y - долгота, в которой находится маркер
+       * @param {number} speed - смещение координаты на градусов/секунду
+       * @param {number} direction - направление изменения координат маркера
+       * 
+       */
+      function changeMarkerPosition(marker, x, y, speed, direction) {
+        switch(direction){
+          case 1: //right
+            setNewPosition(marker, x+speed, y);
+            break;
+          case 2: //left
+            setNewPosition(marker, x-speed, y);
+            break;
+          case 3: //up
+            setNewPosition(marker, x, y+speed);
+            break;
+          case 4: //down
+            setNewPosition(marker, x, y-speed);
+            break;
+        }
+	  }
+	  
+        /**
+         * 
+         * 
+         */
+		function CreateUnits(map, Number) {
+			//создание необходимого количества юнитов
+			for (var i = 0; i < Number; i++) {
+				let x;			//широта
+        		let y; 			//долгота
+        		let speed;		//гр/сек
+				var position;	//направление движения
+				
+				x = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
+				y = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
+				speed =  randomInRange(0.00004, 0.00008);
+				position = { lat: x, lng: y}; 			//объект, содержащий координаты маркера
+
+				var marker = new google.maps.Marker({
+				position: position,
+				map: map,
+				title: "people"+i,
+				icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
+				}); 
+				markers.push(Item(marker, x, y, speed));	//добавление в массив со всеми маркерами
+			}
+		}
+        
+        /**
+         * 
+         * 
+         */
+		function UnitsMovement(map, Number, markers) {
+			let direction1 = [];	//массив для хранения текущего направления у каждого юнита
+			for (var i = 0; i < Number; i++) {	//начальное направление задается случайным образом
+				direction1.push(randomizeInteger(1,5));
+			}
+			var t1 = 0;	//таймер (текущая секунда)
+			interval1 =  setInterval(function() {
+				console.log("tr\n");
+				t1++;
+				console.log(flag);
+				//при достигнутом количестве выполнений функции - завершить ее работа
+				if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
+					clearInterval(interval1);
+					flag = 0;
+				}
+				//каждые 100мс изменять позицию всех юнитов в нужном направлении и на нужное расстояние
+				for (var i = 0; i < Number; i++) {
+					if(t1 % 30 == 0){	//менять напрвление случайным образом каждые 30 тиков функции
+						direction1[i] = randomizeInteger(1,5);
+					}
+					console.log("i: "+i+"\tdir:"+direction1[i]);
+					changeMarkerPosition(markers[i].marker, markers[i].marker.getPosition().lat(), markers[i].marker.getPosition().lng(), markers[i].speed, direction1[i]);
+				}
+			}, 100); //Every 1000ms = 1sec
+		}
+        
+        /**
+         * 
+         * 
+         */
+		function UI_ForButtons(controlUI,controlText){
+			// Set CSS for the control border.
+			controlUI.style.backgroundColor = "#fff";
+			controlUI.style.border = "2px solid #fff";
+			controlUI.style.borderRadius = "3px";
+			controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+			controlUI.style.cursor = "pointer";
+			controlUI.style.marginBottom = "55px";
+			controlUI.style.textAlign = "center";
+			// Set CSS for the control interior.
+			controlText.style.color = "rgb(25,25,25)";
+			controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+			controlText.style.fontSize = "16px";
+			controlText.style.lineHeight = "38px";
+			controlText.style.paddingLeft = "5px";
+			controlText.style.paddingRight = "5px";
+
+		}
+
+		/**
+		 * 
+		 * Функция создания кнопки для генерации необходимого количества юнитов
+		 * 
+		 * @param {DUNNO} controlDIV - 
+		 * @param {Object} map - 
+		 * @constructor
+		 */
+		 function GeneratePeople_Button(controlDiv, map) {
+			const controlUI = document.createElement("div");
+			const controlText = document.createElement("div");
+			UI_ForButtons(controlUI,controlText);
+			controlUI.title = "Click to generate Units";
+			controlText.innerHTML = "Generate Units";
+			controlDiv.appendChild(controlUI);
+			controlUI.appendChild(controlText);
+			// Setup the click event listeners: simply set the map to Chicago.
+			controlUI.addEventListener("click", () => {
+				var Number = 20;
+				CreateUnits(map, Number);
+			});
+		}
+		
+		/**
+		 * Функция создания кнопки для запуска движения юнитов
+		 * 
+		 * @param {DUNNO} controlDIV - 
+		 * @param {Object} map - 
+		 * @param {Array} markers - массив уже созданных маркеров
+		 * @constructor
+		 */
+		function StartMoving_Button(controlDiv, map, markers) {
+			// Set CSS for the control border.
+			const controlUI = document.createElement("div");
+			const controlText = document.createElement("div");
+			UI_ForButtons(controlUI,controlText);
+			controlUI.title = "Click to start the Units movement";
+			controlText.innerHTML = "Start Movement";
+			controlDiv.appendChild(controlUI);
+			controlUI.appendChild(controlText);
+			// Setup the click event listeners: simply set the map to Chicago.
+			controlUI.addEventListener("click", () => {
+				var Number = markers.length;
+				UnitsMovement(map, Number, markers);
+			});
+		}
+
+		/**
+		 * Функция создания кнопки для остановки движения юнитов
+		 * 
+		 * @param {DUNNO} controlDIV - 
+		 * @param {Object} map - 
+		 * @param {Array} interval - указатель на функцию с таймеров, для последующей остановки
+		 * @constructor
+		 */
+		function StopMoving_Button(controlDiv, map, interval){
+			const controlUI = document.createElement("div");
+			const controlText = document.createElement("div");
+			UI_ForButtons(controlUI,controlText);
+			controlUI.title = "Click to stop the Units movement";
+			controlText.innerHTML = "Stop Movement";
+			controlDiv.appendChild(controlUI);
+			controlUI.appendChild(controlText);
+			// Setup the click event listeners: simply set the map to Chicago.
+			controlUI.addEventListener("click", () => {
+				flag = 1;
+				//clearInterval(interval);
+				console.log("ITS BEEN CLICKED: "+flag);
+			});
+		}
+
+      function initMap() {
+
+		//параметры карты
+		var pos = { lat: 55.014690, lng: 82.959608 } //координаты позиции центра для отображения карты
+        var opt = {
+        	center: pos,
+        	zoom: 15,
+        }
+
+        //создание объекта типа "Карта"
+		var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
+		
+		//Кнопка для генерации
+		const GenerateUnits = document.createElement("div");
+		GeneratePeople_Button(GenerateUnits, FirstMap);
+		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+			GenerateUnits
+		);
+		//Кнопка для запуска движения
+		const StartMovement = document.createElement("div");
+		StartMoving_Button(StartMovement, FirstMap, markers);
+		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+			StartMovement
+		);
+
+		//Кнопка для остановки движения
+		const StopMovement = document.createElement("div");
+		StopMoving_Button(StopMovement, FirstMap, interval1);
+		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+			StopMovement
+		);
+
+
+		/**
+		 * В планах:
+		 * 	 - 	Место для ввода генерируемого количества юнитов
+         *   -  Кнопошка очистки карты от юнитов
+		 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
+		 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
+		 * 	 	на него, которая enabled даже при движении
+		 * 	 -	Ну есессна ограничение дорогами
+		 * 	 -	Генериться юниты будут случайно, но планируется определять ближайшую дорогу, мувиться на нее 
+		 * 		и только потом отображаться на карте
+		 * 	 -	Вычисление гр/100ms для каждой заданной скорости (ну типо сдвиг по карте на шаг в гр/100ms)
+		 * 	 -	Хотелось бы адекватное движение, а не вправо-влево-вверх-вниз
+		 * 
+		 * *******	ПО МЕРЕ ВЫПОЛНЕНИЯ ВОЗМОЖНЫ ИЗМЕНЕНИЯ	*******
+		 */
+
+
+	}
+	  
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
