@@ -7,7 +7,7 @@
         Set your own API-key. Testing key is not valid for other web-sites and services.
         Get your API-key on the Developer Dashboard: https://developer.tech.yandex.ru/keys/
     -->
-    <script src="https://api-maps.yandex.ru/2.1/?lang=en_RU&amp;apikey=OAU9O3HthXtLZDvg5sx~x5n0dULWAPs0qAcCN07W7GOxl-OB26XKy4ONrE1WUcXQw8tZm0Gw1~qZBxJlGUjXT3lKZdg0Nusvpx6m3jNpLh8" type="text/javascript"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_RU&amp;apikey=197f1a96-6ccc-4845-aa21-7bd5de550213" type="text/javascript"></script>
 
 	<style>
         html, body, #map {
@@ -119,32 +119,6 @@
         }
         console.log(Markers);
     
-
-        let direction1 = [];
-        for (var i = 0; i < NumberOfUnit; i++) {
-          direction1.push(randomizeInteger(1,5));
-        }
-        var t1 = 0;
-        console.log("DIRECTION1"+direction1);
-        var interval1 =  setInterval(function() {
-          console.log("tr\n");
-          t1++;
-          if(t1 == 300){
-            clearInterval(interval1);
-          }
-          
-          for (var i = 0; i < NumberOfUnit; i++) {
-            if(t1 % 30 == 0){
-                direction1[i] = randomizeInteger(1,5);
-            }
-            console.log("i: "+i+"\tdir:"+direction1[i]);
-            changeMarkerPosition(TTR[i].marker, TTR[i].marker.getPosition().lat(), TTR[i].marker.getPosition().lng(), TTR[i].speed, direction1[i]);
-          }
-         }, 100); //Every 1000ms = 1sec
-
-
-
-
 });
     </script>
   </head>

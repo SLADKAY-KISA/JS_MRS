@@ -9,21 +9,21 @@
 		    ></script>
 		    
     		<style type="text/css">
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
+				/* Always set the map height explicitly to define the size of the div
+				* element that contains the map. */
      			#map {
-        			height: 100%;
-			/* width: 80%; */
-      }
+        			height: 100%
 
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+                }
+
+				/* Optional: Makes the sample page fill the window. */
+				html,
+				body {
+					height: 100%;
+					margin: 0;
+					padding: 0;
+				}
+    		</style>
 
 
     <script>
@@ -34,6 +34,10 @@
 	  var interval1;
 	  var flag = 0;
 	  const chicago = { lat: 55.014690, lng: 82.959608 };
+	  let buttons = [];
+	  let buttonsflags = [ 0, 1, 1, 1 ];
+
+
 
       /**
 
@@ -110,7 +114,7 @@
          * 
          * 
          */
-		function CreateUnits(map, Number) {
+		function CreateUnits(map, Number, markers) {
 			//создание необходимого количества юнитов
 			for (var i = 0; i < Number; i++) {
 				let x;			//широта
@@ -131,6 +135,8 @@
 				}); 
 				markers.push(Item(marker, x, y, speed));	//добавление в массив со всеми маркерами
 			}
+			console.log(markers);
+			console.log(markers.length);
 		}
         
         /**
@@ -144,9 +150,9 @@
 			}
 			var t1 = 0;	//таймер (текущая секунда)
 			interval1 =  setInterval(function() {
-				console.log("tr\n");
+
 				t1++;
-				console.log(flag);
+
 				//при достигнутом количестве выполнений функции - завершить ее работа
 				if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
 					clearInterval(interval1);
@@ -157,105 +163,155 @@
 					if(t1 % 30 == 0){	//менять напрвление случайным образом каждые 30 тиков функции
 						direction1[i] = randomizeInteger(1,5);
 					}
-					console.log("i: "+i+"\tdir:"+direction1[i]);
+
 					changeMarkerPosition(markers[i].marker, markers[i].marker.getPosition().lat(), markers[i].marker.getPosition().lng(), markers[i].speed, direction1[i]);
 				}
 			}, 100); //Every 1000ms = 1sec
 		}
-        
+
         /**
          * 
          * 
          */
-		function UI_ForButtons(controlUI,controlText){
-			// Set CSS for the control border.
+		function UI_ForButtons(controlUI){
 			controlUI.style.backgroundColor = "#fff";
 			controlUI.style.border = "2px solid #fff";
 			controlUI.style.borderRadius = "3px";
 			controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
 			controlUI.style.cursor = "pointer";
-			controlUI.style.marginBottom = "55px";
+
 			controlUI.style.textAlign = "center";
-			// Set CSS for the control interior.
-			controlText.style.color = "rgb(25,25,25)";
-			controlText.style.fontFamily = "Roboto,Arial,sans-serif";
-			controlText.style.fontSize = "16px";
-			controlText.style.lineHeight = "38px";
-			controlText.style.paddingLeft = "5px";
-			controlText.style.paddingRight = "5px";
+			controlUI.style.color = "rgb(25,25,25)";
+			controlUI.style.fontFamily = "Roboto,Arial,sans-serif";
+			controlUI.style.fontSize = "16px";
+			controlUI.style.lineHeight = "38px";
+			controlUI.style.paddingLeft = "5px";
+			controlUI.style.paddingRight = "5px";
 
 		}
 
 		/**
 		 * 
-		 * Функция создания кнопки для генерации необходимого количества юнитов
+		 * Функция создания и обраотки нажатия кнопки для генерации необходимого количества юнитов
 		 * 
-		 * @param {DUNNO} controlDIV - 
-		 * @param {Object} map - 
+		 * @param {button} controlDIV - кнопка генерации юнитов
+		 * @param {google.maps.Map} map - карта
 		 * @constructor
 		 */
-		 function GeneratePeople_Button(controlDiv, map) {
-			const controlUI = document.createElement("div");
-			const controlText = document.createElement("div");
-			UI_ForButtons(controlUI,controlText);
-			controlUI.title = "Click to generate Units";
-			controlText.innerHTML = "Generate Units";
-			controlDiv.appendChild(controlUI);
-			controlUI.appendChild(controlText);
-			// Setup the click event listeners: simply set the map to Chicago.
-			controlUI.addEventListener("click", () => {
+		 function GeneratePeople_Button(controlDiv, map, markers) {
+
+			controlDiv.id = "Generate";
+			UI_ForButtons(controlDiv);
+			controlDiv.title = "Click to generate Units";
+			controlDiv.innerHTML = "Generate Units";
+			controlDiv.style.color = "rgb(25,25,25)";
+
+			controlDiv.addEventListener("click", () => {
+
+				var button = document.getElementById("Start");
+				button.removeAttribute("disabled");
+
+				var button1 = document.getElementById("Clear");
+				button1.removeAttribute("disabled");
+
 				var Number = 20;
-				CreateUnits(map, Number);
+				CreateUnits(map, Number, markers);
 			});
 		}
 		
 		/**
-		 * Функция создания кнопки для запуска движения юнитов
+		 * Функция создания и обработки нажатия кнопки для запуска движения юнитов
 		 * 
-		 * @param {DUNNO} controlDIV - 
-		 * @param {Object} map - 
+		 * @param {button} controlDIV - кнопка начала движения
+		 * @param {google.maps.Map} map - карта
 		 * @param {Array} markers - массив уже созданных маркеров
 		 * @constructor
 		 */
 		function StartMoving_Button(controlDiv, map, markers) {
-			// Set CSS for the control border.
-			const controlUI = document.createElement("div");
-			const controlText = document.createElement("div");
-			UI_ForButtons(controlUI,controlText);
-			controlUI.title = "Click to start the Units movement";
-			controlText.innerHTML = "Start Movement";
-			controlDiv.appendChild(controlUI);
-			controlUI.appendChild(controlText);
-			// Setup the click event listeners: simply set the map to Chicago.
-			controlUI.addEventListener("click", () => {
+
+			controlDiv.id = "Start";
+			UI_ForButtons(controlDiv);
+			controlDiv.title = "Click to start the Units movement";
+			controlDiv.innerHTML = "Start Movement";
+
+			controlDiv.addEventListener("click", () => {
+
+				controlDiv.setAttribute("disabled", "");
+
+				var button = document.getElementById("Generate");
+				button.setAttribute("disabled", "");
+
+				var button1 = document.getElementById("Clear");
+				button1.setAttribute("disabled", "");
+
+				var button2 = document.getElementById("Stop");
+				button2.removeAttribute("disabled");
+
 				var Number = markers.length;
 				UnitsMovement(map, Number, markers);
 			});
 		}
 
 		/**
-		 * Функция создания кнопки для остановки движения юнитов
+		 * Функция создания и обработки нажатия кнопки для остановки движения юнитов
 		 * 
-		 * @param {DUNNO} controlDIV - 
-		 * @param {Object} map - 
+		 * @param {button} controlDIV - кнопка остановки движения
+		 * @param {google.maps.Map} map - карта
 		 * @param {Array} interval - указатель на функцию с таймеров, для последующей остановки
 		 * @constructor
 		 */
 		function StopMoving_Button(controlDiv, map, interval){
-			const controlUI = document.createElement("div");
-			const controlText = document.createElement("div");
-			UI_ForButtons(controlUI,controlText);
-			controlUI.title = "Click to stop the Units movement";
-			controlText.innerHTML = "Stop Movement";
-			controlDiv.appendChild(controlUI);
-			controlUI.appendChild(controlText);
-			// Setup the click event listeners: simply set the map to Chicago.
-			controlUI.addEventListener("click", () => {
+
+			controlDiv.id = "Stop";
+			UI_ForButtons(controlDiv);
+			controlDiv.title = "Click to stop the Units movement";
+			controlDiv.innerHTML = "Stop Movement";
+
+			controlDiv.addEventListener("click", () => {
+
+				controlDiv.setAttribute("disabled", "");
+
+				var button = document.getElementById("Generate");
+				button.removeAttribute("disabled");
+
+				var button1 = document.getElementById("Clear");
+				button1.removeAttribute("disabled");
+
+				var button2 = document.getElementById("Start");
+				button2.removeAttribute("disabled");
+
 				flag = 1;
-				//clearInterval(interval);
-				console.log("ITS BEEN CLICKED: "+flag);
+
+				console.log("ITS BEEN CLICKED: " + flag);
 			});
 		}
+
+		/**
+		 * Функция создания и обработки нажатия кнопки для очистки юнитов с карты
+		 * 
+		 * @param {button} controlDIV - кнопка очистки
+		 * @param {Array} markers - массив уже созданных маркеров
+		 * @constructor
+		 */
+		function ClearUnits_Button(controlDiv, markers){
+
+			controlDiv.id = "Clear";
+			UI_ForButtons(controlDiv);
+			controlDiv.title = "Click to clear the Units";
+			controlDiv.innerHTML = "Clear Units";
+
+			controlDiv.addEventListener("click", () => {
+
+			controlDiv.setAttribute("disabled", "");
+
+			for (let i = 0; i < markers.length; i++) {
+				markers[i].marker.setMap(null);
+				}
+			markers.length = 0;
+				
+			});
+		}
+
 
       function initMap() {
 
@@ -263,37 +319,53 @@
 		var pos = { lat: 55.014690, lng: 82.959608 } //координаты позиции центра для отображения карты
         var opt = {
         	center: pos,
-        	zoom: 15,
+			zoom: 15,
         }
 
         //создание объекта типа "Карта"
-		var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
+        var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
+
 		
+
 		//Кнопка для генерации
-		const GenerateUnits = document.createElement("div");
-		GeneratePeople_Button(GenerateUnits, FirstMap);
+		const GenerateUnits = document.createElement("button");
+		GeneratePeople_Button(GenerateUnits, FirstMap, markers);
 		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
 			GenerateUnits
 		);
+
 		//Кнопка для запуска движения
-		const StartMovement = document.createElement("div");
+		const StartMovement = document.createElement("button");
 		StartMoving_Button(StartMovement, FirstMap, markers);
 		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
 			StartMovement
 		);
+		StartMovement.setAttribute("disabled", "");
 
 		//Кнопка для остановки движения
-		const StopMovement = document.createElement("div");
+		const StopMovement = document.createElement("button");
 		StopMoving_Button(StopMovement, FirstMap, interval1);
 		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
 			StopMovement
 		);
+		StopMovement.setAttribute("disabled", "");
+
+		//Кнопка для остановки движения
+		const ClearUnits = document.createElement("button");
+		ClearUnits_Button(ClearUnits, markers);
+		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+			ClearUnits
+		);
+		ClearUnits.setAttribute("disabled", "");
+
+        // FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
+        // markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
+
 
 
 		/**
 		 * В планах:
 		 * 	 - 	Место для ввода генерируемого количества юнитов
-         *   -  Кнопошка очистки карты от юнитов
 		 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
 		 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
 		 * 	 	на него, которая enabled даже при движении
