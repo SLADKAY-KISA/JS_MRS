@@ -2,21 +2,23 @@
 <html>
 	<head>
     		<title>People&Roads</title>
-    		<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+			<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     		<script
       		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6UyUT2h5LiCC2ClU7WUqoQSGq5EPQOSQ&callback=initMap&libraries=&v=weekly"
       		defer
-		    ></script>
+			></script>
+			<script src="https://api-maps.yandex.ru/2.1/?lang=en_RU&amp;apikey=599d40fb-71b4-47be-b424-072f354f7bb7" type="text/javascript"></script>
+      		<script type="text/javascript" src="geopoint.js"></script>
 		    
-    		<style type="text/css">
-				/* Always set the map height explicitly to define the size of the div
-				* element that contains the map. */
+			<style type="text/css">
+			
      			#map {
         			height: 100%
 
                 }
 
-				/* Optional: Makes the sample page fill the window. */
+
 				html,
 				body {
 					height: 100%;
@@ -27,73 +29,68 @@
 
 
     <script>
-      const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
-      const Item = Struct('marker', 'x', 'y', 'speed')
-      var people = [];
-	  let markers = [];
-	  var interval1;
-	  var flag = 0;
-	  const chicago = { lat: 55.014690, lng: 82.959608 };
-	  let buttons = [];
-	  let buttonsflags = [ 0, 1, 1, 1 ];
+		const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
+		const Item = Struct('marker', 'speed')
+		
+		let markers = [];
+		var interval1;
+		var flag = 0;
+		var chicago = { lat: 55.014690, lng: 82.959608 };
+		/**
 
 
+		*/
+		function randomInRange(min, max) {
+			return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
+		} 
 
-      /**
+		/**
+			 * 
+			 * 
+			 */
+		function randomizeInteger(min, max) {
+			if(max == null) {
+				max = (min == null ? Number.MAX_SAFE_INTEGER : min);
+			min = 0;
+			}
+			min = Math.ceil(min);  // inclusive min
+			max = Math.floor(max); // exclusive max
+			if(min > max - 1) {
+				throw new Error("Incorrect arguments.");
+			}
+			return min + Math.floor((max - min) * Math.random());
+		}
 
+		/**
+		 * Функция установки маркера на новую позицию с координатами широты(х) и долготы(у)
+		 * 
+		 * @param {Object} marker - указатель на структуру, содержащую 
+		 * @param {number} x - широта, в которую надо переместить маркер
+		 * @param {number} y - долгота, в которую надо переместить маркер
+		 * 
+		 * 
+		 * 
+		 * function set(ing?) new coordinates for one unit (marker) at map
+		 * @param {Object} marker - 
+		 * @param {number} x - lalitude
+		 * @param {number} y - longitude
+		 */
+		function setNewPosition(marker, x, y){
+			var latlng = new google.maps.LatLng(x, y);
+			marker.setPosition(latlng);
+		}
 
-      */
-      function randomInRange(min, max) {
-        return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
-      } 
-
-      /**
-         * 
-         * 
-         */
-      function randomizeInteger(min, max) {
-      	if(max == null) {
-    	    max = (min == null ? Number.MAX_SAFE_INTEGER : min);
-      	  min = 0;
-        }
-        min = Math.ceil(min);  // inclusive min
-        max = Math.floor(max); // exclusive max
-  	    if(min > max - 1) {
-    	    throw new Error("Incorrect arguments.");
-        }
-        return min + Math.floor((max - min) * Math.random());
-      }
-
-      /**
-       * Функция установки маркера на новую позицию с координатами широты(х) и долготы(у)
-       * 
-       * @param {Object} marker - указатель на структуру, содержащую 
-       * @param {number} x - широта, в которую надо переместить маркер
-       * @param {number} y - долгота, в которую надо переместить маркер
-       * 
-       * 
-       * 
-       * function set(ing?) new coordinates for one unit (marker) at map
-       * @param {Object} marker - 
-       * @param {number} x - lalitude
-       * @param {number} y - longitude
-       */
-      function setNewPosition(marker, x, y){
-        var latlng = new google.maps.LatLng(x, y);
-        marker.setPosition(latlng);
-      }
-
-      /**
-       * Функция изменения позиции маркера на карте, в зависимости от выбранного направления
-       * 
-       * @param {Object} marker - указатель на структуру
-       * @param {number} x - широта, в которой находится маркер
-       * @param {number} y - долгота, в которой находится маркер
-       * @param {number} speed - смещение координаты на градусов/секунду
-       * @param {number} direction - направление изменения координат маркера
-       * 
-       */
-      function changeMarkerPosition(marker, x, y, speed, direction) {
+		/**
+		 * Функция изменения позиции маркера на карте, в зависимости от выбранного направления
+		 * 
+		 * @param {Object} marker - указатель на структуру
+		 * @param {number} x - широта, в которой находится маркер
+		 * @param {number} y - долгота, в которой находится маркер
+		 * @param {number} speed - смещение координаты на градусов/секунду
+		 * @param {number} direction - направление изменения координат маркера
+		 * 
+		 */
+		function changeMarkerPosition(marker, x, y, speed, direction) {
         switch(direction){
           case 1: //right
             setNewPosition(marker, x+speed, y);
@@ -121,19 +118,33 @@
         		let y; 			//долгота
         		let speed;		//гр/сек
 				var position;	//направление движения
-				
+				var icon1 = 'https://img.icons8.com/plasticine/50/000000/arms-up.png';
+				var icon2 = 'https://img.icons8.com/plasticine/60/000000/person-laying-down.png'
 				x = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
 				y = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
-				speed =  randomInRange(0.00004, 0.00008);
-				position = { lat: x, lng: y}; 			//объект, содержащий координаты маркера
-
-				var marker = new google.maps.Marker({
-				position: position,
-				map: map,
-				title: "people"+i,
-				icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
-				}); 
-				markers.push(Item(marker, x, y, speed));	//добавление в массив со всеми маркерами
+				
+				position = { lat: x, lng: y}; 
+				if(i < Number/2){
+					speed =  randomInRange(0.00000749, 0.00001748);
+					
+					var marker = new google.maps.Marker({
+					position: position,
+					map: map,
+					title: "people"+i,
+					icon: icon1,
+					}); 
+				}
+				else{
+					speed =  randomInRange(0.00007494, 0.00017486);
+					
+					var marker = new google.maps.Marker({
+					position: position,
+					map: map,
+					title: "people"+i,
+					icon: icon2,
+					});
+				}			//объект, содержащий координаты маркера
+				markers.push(Item(marker, speed));	//добавление в массив со всеми маркерами
 			}
 			console.log(markers);
 			console.log(markers.length);
@@ -207,14 +218,18 @@
 			controlDiv.style.color = "rgb(25,25,25)";
 
 			controlDiv.addEventListener("click", () => {
-
+				var Number = 20;
+				var numb = document.getElementById("Number");
+				if(numb.value != 0)
+					Number = numb.value;
+				console.log(numb.value);
 				var button = document.getElementById("Start");
 				button.removeAttribute("disabled");
+				button.style.color = "rgb(25,25,25)";
 
 				var button1 = document.getElementById("Clear");
 				button1.removeAttribute("disabled");
-
-				var Number = 20;
+				button1.style.color = "rgb(25,25,25)";
 				CreateUnits(map, Number, markers);
 			});
 		}
@@ -232,20 +247,25 @@
 			controlDiv.id = "Start";
 			UI_ForButtons(controlDiv);
 			controlDiv.title = "Click to start the Units movement";
+			controlDiv.style.color = "rgb(192,192,192)";
 			controlDiv.innerHTML = "Start Movement";
 
 			controlDiv.addEventListener("click", () => {
 
 				controlDiv.setAttribute("disabled", "");
+				controlDiv.style.color = "rgb(192,192,192)";
 
 				var button = document.getElementById("Generate");
 				button.setAttribute("disabled", "");
+				button.style.color = "rgb(192,192,192)";
 
 				var button1 = document.getElementById("Clear");
 				button1.setAttribute("disabled", "");
+				button1.style.color = "rgb(192,192,192)";
 
 				var button2 = document.getElementById("Stop");
 				button2.removeAttribute("disabled");
+				button2.style.color = "rgb(25,25,25)";
 
 				var Number = markers.length;
 				UnitsMovement(map, Number, markers);
@@ -265,20 +285,25 @@
 			controlDiv.id = "Stop";
 			UI_ForButtons(controlDiv);
 			controlDiv.title = "Click to stop the Units movement";
+			controlDiv.style.color = "rgb(192,192,192)";
 			controlDiv.innerHTML = "Stop Movement";
 
 			controlDiv.addEventListener("click", () => {
 
 				controlDiv.setAttribute("disabled", "");
+				controlDiv.style.color = "rgb(192,192,192)";
 
 				var button = document.getElementById("Generate");
 				button.removeAttribute("disabled");
+				button.style.color = "rgb(25,25,25)";
 
 				var button1 = document.getElementById("Clear");
 				button1.removeAttribute("disabled");
+				button1.style.color = "rgb(25,25,25)";
 
 				var button2 = document.getElementById("Start");
 				button2.removeAttribute("disabled");
+				button2.style.color = "rgb(25,25,25)";
 
 				flag = 1;
 
@@ -299,10 +324,17 @@
 			UI_ForButtons(controlDiv);
 			controlDiv.title = "Click to clear the Units";
 			controlDiv.innerHTML = "Clear Units";
+			controlDiv.style.color = "rgb(192,192,192)";
 
 			controlDiv.addEventListener("click", () => {
 
 			controlDiv.setAttribute("disabled", "");
+			controlDiv.style.color = "rgb(192,192,192)";
+
+			
+			var button1 = document.getElementById("Start");
+				button1.setAttribute("disabled", "");
+				button1.style.color = "rgb(192,192,192)"
 
 			for (let i = 0; i < markers.length; i++) {
 				markers[i].marker.setMap(null);
@@ -312,74 +344,141 @@
 			});
 		}
 
+		function getMAP(temp){
+			let URL = "https://geocode-maps.yandex.ru/1.x/?apikey=599d40fb-71b4-47be-b424-072f354f7bb7&geocode=" ;
+			let x = temp[0].replace(/ /g, "").replace("'", "%27");   
+			// https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&geocode=55°01%2715.0%22N%2082°57%2721.9%22E&format=json",function(data) {
+			x=x.concat("N");
+			
+			let y = temp[1].replace(/ /g, "").replace("'", "%27");
+			
+			y=y.concat("E");
+			let format ="&format=json";
+		//55°01%2715.0%22N%20, 82°57%2721.9%22E"
+			// let xx = "56°01'55.7"N 92°49'19.7"E"; 56°01%2755.7"N%2092°49%2719.7"E
+		// https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&geocode=55°01%2715.0%22N%2082°57%2721.9%22E&format=json",function(data) {
+		//           
+			let URL1 = URL.concat(x,"%20",y,format);
+			console.log(x);
+			console.log(y);
+			console.log(URL1);
+			let way; 
+			$.get(URL1,function(data) {
+		//          
+			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&geocode=&format=json?" + $.param({geocode: "55°01%2715.0%22N%20, 82°57%2721.9%22E"}) ,function(data) {
+				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind
+						console.log(data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind);
+						}, "json");
 
-      function initMap() {
+			return way; 
+		}
 
-		//параметры карты
-		var pos = { lat: 55.014690, lng: 82.959608 } //координаты позиции центра для отображения карты
-        var opt = {
-        	center: pos,
-			zoom: 15,
-        }
-
-        //создание объекта типа "Карта"
-        var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
-
-		
-
-		//Кнопка для генерации
-		const GenerateUnits = document.createElement("button");
-		GeneratePeople_Button(GenerateUnits, FirstMap, markers);
-		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
-			GenerateUnits
-		);
-
-		//Кнопка для запуска движения
-		const StartMovement = document.createElement("button");
-		StartMoving_Button(StartMovement, FirstMap, markers);
-		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
-			StartMovement
-		);
-		StartMovement.setAttribute("disabled", "");
-
-		//Кнопка для остановки движения
-		const StopMovement = document.createElement("button");
-		StopMoving_Button(StopMovement, FirstMap, interval1);
-		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
-			StopMovement
-		);
-		StopMovement.setAttribute("disabled", "");
-
-		//Кнопка для остановки движения
-		const ClearUnits = document.createElement("button");
-		ClearUnits_Button(ClearUnits, markers);
-		FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
-			ClearUnits
-		);
-		ClearUnits.setAttribute("disabled", "");
-
-        // FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
-        // markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
+		function translate_from_lat_lon_to_minutes(lon,lat) {
+			var point = new GeoPoint(lon, lat);
+			return [point.getLonDeg(),point.getLatDeg()];
+		}
 
 
+		function initMap() {
 
-		/**
-		 * В планах:
-		 * 	 - 	Место для ввода генерируемого количества юнитов
-		 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
-		 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
-		 * 	 	на него, которая enabled даже при движении
-		 * 	 -	Ну есессна ограничение дорогами
-		 * 	 -	Генериться юниты будут случайно, но планируется определять ближайшую дорогу, мувиться на нее 
-		 * 		и только потом отображаться на карте
-		 * 	 -	Вычисление гр/100ms для каждой заданной скорости (ну типо сдвиг по карте на шаг в гр/100ms)
-		 * 	 -	Хотелось бы адекватное движение, а не вправо-влево-вверх-вниз
-		 * 
-		 * *******	ПО МЕРЕ ВЫПОЛНЕНИЯ ВОЗМОЖНЫ ИЗМЕНЕНИЯ	*******
-		 */
+			//параметры карты
+			var pos = { lat: 55.014690, lng: 82.959608 } //координаты позиции центра для отображения карты
+			var opt = {
+				center: pos,
+				zoom: 15,
+			}
+
+			//создание объекта типа "Карта"
+			var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
 
 
-	}
+			const NumberUnits = document.createElement("input");
+			NumberUnits.id = "Number";
+			UI_ForButtons(NumberUnits);
+			//GeneratePeople_Button(NumberUnits, FirstMap, markers);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				NumberUnits
+			);
+			
+
+			//Кнопка для генерации юнитов
+			const GenerateUnits = document.createElement("button");
+			GeneratePeople_Button(GenerateUnits, FirstMap, markers);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				GenerateUnits
+			);
+
+			//Кнопка для запуска движения
+			const StartMovement = document.createElement("button");
+			StartMoving_Button(StartMovement, FirstMap, markers);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				StartMovement
+			);
+			StartMovement.setAttribute("disabled", "");
+
+			//Кнопка для остановки движения
+			const StopMovement = document.createElement("button");
+			StopMoving_Button(StopMovement, FirstMap, interval1);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				StopMovement
+			);
+			StopMovement.setAttribute("disabled", "");
+
+			//Кнопка для удаления всех юнитов
+			const ClearUnits = document.createElement("button");
+			ClearUnits_Button(ClearUnits, markers);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				ClearUnits
+			);
+			ClearUnits.setAttribute("disabled", "");
+
+
+
+
+			let x;
+        let y;
+        let speed;
+        var position;
+        var types = {};
+          x = randomInRange(55.015465, 55.012316);
+          y = randomInRange(82.956089, 82.963985);
+          speed = 0.00002;
+          position = { lat: x, lng: y};
+          var marker = new google.maps.Marker({
+            position: position,
+            map: FirstMap,
+            title: "person",
+            icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
+           });
+
+			var temp ;
+          var way_human;
+           temp=translate_from_lat_lon_to_minutes(marker.getPosition().lat(), marker.getPosition().lng());
+             console.log(temp);
+           way_human = getMAP(temp);
+
+
+			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
+			// markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
+
+
+
+			/**
+			 * В планах:
+			 * 	 - 	Место для ввода генерируемого количества юнитов
+			 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
+			 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
+			 * 	 	на него, которая enabled даже при движении
+			 * 	 -	Ну есессна ограничение дорогами
+			 * 	 -	Генериться юниты будут случайно, но планируется определять ближайшую дорогу, мувиться на нее 
+			 * 		и только потом отображаться на карте
+			 * 	 -	Хотелось бы адекватное движение, а не вправо-влево-вверх-вниз
+			 * 
+			 * *******	ПО МЕРЕ ВЫПОЛНЕНИЯ ВОЗМОЖНЫ ИЗМЕНЕНИЯ	*******
+			 */
+
+
+		}
 	  
     </script>
   </head>
