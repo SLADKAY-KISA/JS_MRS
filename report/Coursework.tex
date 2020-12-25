@@ -1,0 +1,128 @@
+\documentclass[a4paper]{article}
+\usepackage[14pt]{extsizes}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage{geometry}
+\geometry{left=2cm}
+\geometry{right=1.5cm}
+\geometry{top=1.5cm}
+\geometry{bottom=1.5cm}
+\usepackage{hyperref}
+\usepackage{graphicx} 
+\usepackage{tabto}
+\usepackage{setspace}
+\usepackage{color} 
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+\begin{onehalfspacing}
+\begin{titlepage}
+	\begin{center}
+		{Федеральное агенство связи \\ Федеральное государственное бюджетное образовательное учреждение высшего образования "Сибирский государственный университет телекоммуникаций и информатики"\\[5pt]}
+		\vspace{1.5cm}
+		\begin{flushright}
+			{\normalsize\bfseries Кафедра ТСиВС}\\
+		\end{flushright}
+		\vspace{2cm}
+		{\Large Отчет по курсовой работе\\по дисциплине: <<Моделирование распределенных систем>>\\на тему: <<Моделирование движения абонентов по дорогам>> } \\[2cm]
+		\begin{flushleft}
+			{\tab Выполнили:\\\tab студенки группы ИА-831:\\\tab Когустова Влада Васильевна\\\tab Угольникова Екатерина Алексеевна} \\[1cm]
+			{\tab Проверили:\\\tab доцент кафедры ТСиВС\\\tab Дроздова Вера Геннадьевна\\\tab ведущий инженер кафедры ТСиВС\\\tab Ахпашев Руслан Владимирович}
+		\end{flushleft}
+		\vfill
+		{Новосибирск 2020}
+	\end{center}
+	
+\end{titlepage}   
+
+%------------------------------------------------------------
+
+\clearpage
+
+\tableofcontents
+\clearpage
+\section{Задание курсовой работы}
+
+\tab Требуется разработать web-страницу, отображающую карту местности. На карте необходимо случайным образом отрисовать базовые станции (BS) и абонентские устройства (UE). Базовые станции статичны. Абонентские устройства могут двигаться, могут стоять на месте.
+
+План курсовой работы:
+\begin{enumerate}
+	\item Создать Web-страницу c картой (yandex || google || openstreetmap).
+
+	\item Создать несколько абонентов (минимум 10) и отобразить их на карте (маркеры\textbackslash картинки\textbackslash схема).
+
+	\item Абоненты должены двигаться только по дорогам (изменение координат абонентов относительно времени).
+
+	\item Шаг изменения координат зависит от скорости абонента.
+
+	\item 50\% абонентов должны ходить со скоростью от 3 до 7 км/ч, 50\% абонентов со скоростью от 30 до 70 км/ч.
+\end{enumerate}
+
+
+\section{Цель работы}
+
+\tab Целью данной курсовой работы является знакомство с языком программирования javascript и использованием API для работы с разными картами (Google, Yandex). Реализация моделирования движения абонентов по карте, при ограничении области движения дорогами. 
+
+\clearpage
+\section{Ход работы}
+\subsection{Краткое описание алгоритма выполнения курсовой работы}
+
+\tab Для начала мы инициализировали карту и разместили на ней константное количество базовых станций, которые представляют собой марекеры на карте с определнными координатами в виде широты и долготы, а также кастомизированы с помощью изображения из интернета.
+
+Следующим шагом было создать необходимое количетсво абонентов со случайными координатами (они так же являются маркерами) и научить их ходить случайным образом по всей карте.
+
+Потом мы добавили некоторые элементы управления и приступили к работе с API для получения необходимых данных с помощью get-запросов к сервисам Google и Yandex. 
+
+Мы 
+
+
+
+\clearpage
+
+
+\section{Результаты работы}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{C:/Users/gieko/Desktop/МРС/Л3/images/result1}
+	\caption{Фрагмент заполненной базы данных по теме IP-основы и  IP-адресация}
+	\label{fig:mpr}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=1\linewidth]{C:/Users/gieko/Desktop/МРС/Л3/images/results}
+\caption{Общая статистика пройденных игр (с учетом участия до использования бота)}
+\label{fig:mpr}
+\end{figure}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{C:/Users/gieko/Desktop/МРС/Л3/images/result2}
+	\caption{Демонстрация результата работы бота в викторине}
+	\label{fig:mpr}
+\end{figure}
+
+\clearpage
+\section{Вывод}
+
+\tab В результате выполнения курсовой работы создана web-страница для взаимодействия с картами Google Maps. Реализовано моделирование движения абонентов по карте, при ограничении области движения дорогами.
+
+Получены навыки работы с языком программирования javascript и стеком языков разметки html/css; навыки работы с картами и их API, навыки написания get-запросов и обработки ответов, представленных данными в JSON формате. 
+
+В результате взаимодействия с сервисами предоставления API у разных вендоров (Gooble, Yamdex) получен незабываемый опыт несправедливого оценивания количества отправленных get-запросов со стороны Yamdex Maps API, впервые так сильно хотелось дождаться наступления нового дня по Московскому времени. А благодаря Gooble Maps API получен первый в жизни кредит, на целых 300\$!
+
+\section*{Приложение 1}
+\addcontentsline{toc}{section}{Приложение 1}
+\begin{enumerate}
+	\item \href {https://github.com/SLADKAY-KISA/JS_MRS.git}{https://github.com/SLADKAY-KISA/JS\_MRS.git}.
+\end{enumerate}
+\end{onehalfspacing}
+
+\clearpage
+\section*{Приложение 2}
+\addcontentsline{toc}{section}{Приложение 2}
+
+
+
+\end{document}
