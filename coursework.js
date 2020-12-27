@@ -1,9 +1,6 @@
 const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
 		const Item = Struct('marker', 'speed')
 		
-
-		let BS = [];
-		let NumberBS = 5;
 		let markers = [];
 		var interval1;
 		var flag = 0;
@@ -52,40 +49,46 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			marker.setPosition(latlng);
 		}
 
-		/**
-		 * Функция изменения позиции маркера на карте, в зависимости от выбранного направления
-		 * 
-		 * @param {Object} marker - указатель на структуру
-		 * @param {number} x - широта, в которой находится маркер
-		 * @param {number} y - долгота, в которой находится маркер
-		 * @param {number} speed - смещение координаты на градусов/секунду
-		 * @param {number} direction - направление изменения координат маркера
-		 * 
-		 */
-		function changeMarkerPosition(marker, x, y, speed, direction) {
-        switch(direction){
-          case 1: //right
-            setNewPosition(marker, x+speed, y);
-            break;
-          case 2: //left
-            setNewPosition(marker, x-speed, y);
-            break;
-          case 3: //up
-            setNewPosition(marker, x, y+speed);
-            break;
-          case 4: //down
-            setNewPosition(marker, x, y-speed);
-            break;
-        }
-	  }
-	  
+	   function getRoadsApi(x, y, option) {
+		  
+			x1 = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
+			y1 = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
+			let URL_for_roads = "https://roads.googleapis.com/v1/snapToRoads?path=";
+			let URL_x = x;
+			let URL_y = y;
+			let URL_x1 = x1;
+			let URL_y1 = y1;
+			let URL_interpolate = "&interpolate=true";
+			let URL_key = "&key=AIzaSyC6UyUT2h5LiCC2ClU7WUqoQSGq5EPQOSQ";
+			let URL_for_roads1 =  URL_for_roads.concat(URL_x,",",URL_y,"|",URL_x1,",",URL_y1,URL_interpolate,URL_key);
+			var x_setNew_possion ;
+			var y_setNew_possion ;
+			var DATA;
+					$.ajax({
+						url: URL_for_roads1,
+						method: "GET",
+						async: false
+					}).then(function(dataRoad) {
+						console.log(dataRoad);
+						x_setNew_possion = dataRoad.snappedPoints[0].location.latitude;
+						y_setNew_possion = dataRoad.snappedPoints[0].location.longitude;
+						DATA=dataRoad;
+					});
+			switch(option){
+				case 1:
+					return [x_setNew_possion,y_setNew_possion];
+				case 2:
+					return DATA;
+			}				
+		}
+
         /**
          * 
          * 
          */
 		function CreateUnits(map, Number, markers) {
 			//создание необходимого количества юнитов
-			for (var i = 0; i < Number; i++) {
+			for (var j = markers.length, i = 0; i < Number; i++, j++) {
 				let x;			//широта
         		let y; 			//долгота
         		let speed;		//гр/сек
@@ -102,7 +105,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people"+i,
+					title: "people"+j,
 					icon: icon1,
 					}); 
 				}
@@ -112,44 +115,77 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people"+i,
+					title: "people"+j,
 					icon: icon2,
 					});
-				}			//объект, содержащий координаты маркера
+				}
+
+				var view_result =  getRoadsApi(x,y, 1);
+				var latlng = new google.maps.LatLng({lat: view_result[0], lng: view_result[1]});
+				marker.setPosition(latlng);
 				markers.push(Item(marker, speed));	//добавление в массив со всеми маркерами
+
+
 			}
+
 			console.log(markers);
 			console.log(markers.length);
 		}
-        
+		
+		function oneStep(markers,view_result, j, i){
+				console.log("I'm people №"+j+" and I'm walking "+i+" step!!");
+				if(view_result[j].snappedPoints[i].location.latitude===markers[j].marker.getPosition().lat() && view_result[j].snappedPoints[i].location.longitude===markers[j].marker.getPosition().lng()){
+					
+				} else {
+					setNewPosition(markers[j].marker, view_result[j].snappedPoints[i].location.latitude, view_result[j].snappedPoints[i].location.longitude);
+					console.log("lat: "+markers[j].marker.getPosition().lat()+"lng: "+markers[j].marker.getPosition().lng());
+				}	
+		}
+		
+
+		function GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad){
+			view_result[j]=getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2);
+			console.log("view_result["+j+"]: "+view_result[j]);
+			NumberOfPointsAtRoad[j]=view_result[j].snappedPoints.length;
+			console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
+		}
+
+		let NumberOfPointsAtRoad = [];
+		var view_result = [];
+
         /**
          * 
          * 
          */
-		function UnitsMovement(map, Number, markers) {
-			let direction1 = [];	//массив для хранения текущего направления у каждого юнита
-			for (var i = 0; i < Number; i++) {	//начальное направление задается случайным образом
-				direction1.push(randomizeInteger(1,5));
-			}
-			var t1 = 0;	//таймер (текущая секунда)
-			interval1 =  setInterval(function() {
+		function UnitsMovement(map, Number, markers) {	
+		for(var j = 0; j < Number; j++){
+			view_result.push(getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2));
+			console.log("view_result["+j+"]: "+view_result[j]);
+			NumberOfPointsAtRoad.push(view_result[j].snappedPoints.length);
+			console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
+		}
 
-				t1++;
-
-				//при достигнутом количестве выполнений функции - завершить ее работа
+		var t=1;
+		var tt = [];
+		for(var j = 0; j < Number; j++){
+			tt.push(1);
+		}
+		interval2 = setInterval(function(){
+			for(var j = 0; j < Number; j++){
 				if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
-					clearInterval(interval1);
+					clearInterval(interval2);
 					flag = 0;
 				}
-				//каждые 100мс изменять позицию всех юнитов в нужном направлении и на нужное расстояние
-				for (var i = 0; i < Number; i++) {
-					if(t1 % 30 == 0){	//менять напрвление случайным образом каждые 30 тиков функции
-						direction1[i] = randomizeInteger(1,5);
-					}
-
-					changeMarkerPosition(markers[i].marker, markers[i].marker.getPosition().lat(), markers[i].marker.getPosition().lng(), markers[i].speed, direction1[i]);
+				if(tt[j] == NumberOfPointsAtRoad[j]){ 
+					GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
+					tt[j]=1;
 				}
-			}, 100); //Every 1000ms = 1sec
+				oneStep(markers,view_result, j, tt[j]);
+				tt[j]++;
+			}
+			t++;
+		}, 500);
+
 		}
 
         /**
@@ -203,6 +239,10 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				button1.removeAttribute("disabled");
 				button1.style.color = "rgb(25,25,25)";
 				CreateUnits(map, Number, markers);
+
+				//console.log(view_result.Promise[1].PromiseResult[0]);
+
+				
 			});
 		}
 		
@@ -316,10 +356,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			});
 		}
 
-		/**
-		 * 
-		 * 
-		 */
+
 		function getMAP(temp){
 			let URL = "https://geocode-maps.yandex.ru/1.x/?apikey=599d40fb-71b4-47be-b424-072f354f7bb7&geocode=" ;
 			let x = temp[0].replace(/ /g, "").replace("'", "%27");   
@@ -339,26 +376,25 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			console.log(y);
 			console.log(URL1);
 			let way; 
-			$.get(URL1,function(data) {
-		//          
-			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&geocode=&format=json?" + $.param({geocode: "55°01%2715.0%22N%20, 82°57%2721.9%22E"}) ,function(data) {
-				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind
-						console.log(data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind);
-						}, "json");
-
+			$.ajax({
+					url: URL1,
+					method: "GET",
+					async: false
+			}).done(function(data) {
+				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind;
+			});
+		
+			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&geocode=&format=json?" 
 			return way; 
 		}
 
-		/**
-		 * 
-		 * 
-		 */
+
 		function translate_from_lat_lon_to_minutes(lon,lat) {
 			var point = new GeoPoint(lon, lat);
 			return [point.getLonDeg(),point.getLatDeg()];
 		}
 
-
+		
 		function initMap() {
 
 			//параметры карты
@@ -371,11 +407,10 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			//создание объекта типа "Карта"
 			var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
 
+
 			const NumberUnits = document.createElement("input");
 			NumberUnits.id = "Number";
-			NumberUnits.setAttribute("size", "3");
-			NumberUnits.setAttribute("max", "100");
-			NumberUnits.setAttribute("placeholder", "Unit")
+
 			UI_ForButtons(NumberUnits);
 			//GeneratePeople_Button(NumberUnits, FirstMap, markers);
 			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
@@ -414,52 +449,28 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			);
 			ClearUnits.setAttribute("disabled", "");
 
+		// 	let x;
+        // let y;
+        // let speed;
+        // var position;
+        // var types = {};
+        //   x = randomInRange(55.015465, 55.012316);
+        //   y = randomInRange(82.956089, 82.963985);
+        //   speed = 0.00002;
+        //   position = { lat: x, lng: y};
+        //   var marker = new google.maps.Marker({
+        //     position: position,
+        //     map: FirstMap,
+        //     title: "person",
+        //     icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
+        //    });
 
-
-			for (var i = 0; i < NumberBS; i++) {
-				let x;			//широта
-        		let y; 			//долгота
-				var position;	
-				var icon3 = 'https://img.icons8.com/doodle/70/000000/cellular-network.png';
-				x = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
-				y = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
-				
-				position = { lat: x, lng: y}; 
-					
-				var base = new google.maps.Marker({
-				position: position,
-				map: FirstMap,
-				title: "Base Station"+i,
-				icon: icon3,
-				}); 
-				BS.push(Item(base, x));	//добавление в массив со всеми маркерами
-			}
-			console.log(BS);
-			console.log(BS.length);
-
-
-
-			// let x;
-			// let y;
-			// let speed;
-			// var position;
-			// var types = {};
-			// x = randomInRange(55.015465, 55.012316);
-			// y = randomInRange(82.956089, 82.963985);
-			// speed = 0.00002;
-			// position = { lat: x, lng: y};
-			// var marker = new google.maps.Marker({
-			// 	position: position,
-			// 	map: FirstMap,
-			// 	title: "person",
-			// 	icon: icon1
-			// });
-
-			// var temp ;
-			// var way_human;
-			// temp=translate_from_lat_lon_to_minutes(marker.getPosition().lat(), marker.getPosition().lng());
-			// console.log(temp);
-			// way_human = getMAP(temp);
+		// 	var temp ;
+        //   var way_human;
+        //    temp=translate_from_lat_lon_to_minutes(marker.getPosition().lat(), marker.getPosition().lng());
+        //      console.log(temp);
+        //    way_human = getMAP(temp);
+        //    console.log(way_human);
 
 
 			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
@@ -469,7 +480,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 
 			/**
 			 * В планах:
-			 * 
+			 * 	 - 	Место для ввода генерируемого количества юнитов
 			 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
 			 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
 			 * 	 	на него, которая enabled даже при движении
