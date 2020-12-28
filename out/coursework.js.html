@@ -28,18 +28,23 @@
         <article>
             <pre class="prettyprint source linenums"><code>const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
 		const Item = Struct('marker', 'speed')
+		const Step = Struct('step_lat', 'step_lng')
 		
-
-		let BS = [];
-		let NumberBS = 5;
 		let markers = [];
 		var interval1;
 		var flag = 0;
 		var chicago = { lat: 55.014690, lng: 82.959608 };
+		
+		let NumberOfPointsAtRoad = [];
+		var view_result = [];
+
+		
 		/**
-
-
-		*/
+		 * Функция для генерации случайного вещественного числа с двойной точностью из заданного диапазона
+		 * @param {number} min минимальная граница диапазона
+		 * @param {number} max максимальная граница диапазона
+		 * @return {number} возвращает сгенерированное вещественное число
+		 */
 		function randomInRange(min, max) {
 			return Math.random() &lt; 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
 		} 
@@ -62,6 +67,32 @@
 		}
 
 		/**
+			 * 
+			 * 
+			 */
+		function rad(x) {
+			return x * Math.PI / 180;
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function DistanceBetweenTwoPoints(point1_lat, point1_lng, point2_lat, point2_lng){
+			//marker1, marker2) {
+			var R = 6378137;
+			var dLat = rad(point2_lat - point1_lat);
+			var dLong = rad(point2_lng - point1_lng);
+			var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
+			Math.cos(rad(point1_lat)) * Math.cos(rad(point2_lat)) *
+			Math.sin(dLong / 2) * Math.sin(dLong / 2);
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			var d = R * c;
+			return d;
+			// console.log(d);
+		};
+
+		/**
 		 * Функция установки маркера на новую позицию с координатами широты(х) и долготы(у)
 		 * 
 		 * @param {Object} marker - указатель на структуру, содержащую 
@@ -81,39 +112,49 @@
 		}
 
 		/**
-		 * Функция изменения позиции маркера на карте, в зависимости от выбранного направления
-		 * 
-		 * @param {Object} marker - указатель на структуру
-		 * @param {number} x - широта, в которой находится маркер
-		 * @param {number} y - долгота, в которой находится маркер
-		 * @param {number} speed - смещение координаты на градусов/секунду
-		 * @param {number} direction - направление изменения координат маркера
-		 * 
-		 */
-		function changeMarkerPosition(marker, x, y, speed, direction) {
-        switch(direction){
-          case 1: //right
-            setNewPosition(marker, x+speed, y);
-            break;
-          case 2: //left
-            setNewPosition(marker, x-speed, y);
-            break;
-          case 3: //up
-            setNewPosition(marker, x, y+speed);
-            break;
-          case 4: //down
-            setNewPosition(marker, x, y-speed);
-            break;
-        }
-	  }
-	  
+			 * 
+			 * 
+			 */
+	   function getRoadsApi(x, y, option) {
+		  
+			x1 = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
+			y1 = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
+			let URL_for_roads = "https://roads.googleapis.com/v1/snapToRoads?path=";
+			let URL_x = x;
+			let URL_y = y;
+			let URL_x1 = x1;
+			let URL_y1 = y1;
+			let URL_interpolate = "&amp;interpolate=true";
+			let URL_key = "&amp;key=AIzaSyC6UyUT2h5LiCC2ClU7WUqoQSGq5EPQOSQ";
+			let URL_for_roads1 =  URL_for_roads.concat(URL_x,",",URL_y,"|",URL_x1,",",URL_y1,URL_interpolate,URL_key);
+			var x_setNew_possion ;
+			var y_setNew_possion ;
+			var DATA;
+					$.ajax({
+						url: URL_for_roads1,
+						method: "GET",
+						async: false
+					}).then(function(dataRoad) {
+						console.log(dataRoad);
+						x_setNew_possion = dataRoad.snappedPoints[0].location.latitude;
+						y_setNew_possion = dataRoad.snappedPoints[0].location.longitude;
+						DATA=dataRoad;
+					});
+			switch(option){
+				case 1:
+					return [x_setNew_possion,y_setNew_possion];
+				case 2:
+					return DATA;
+			}				
+		}
+
         /**
          * 
          * 
          */
 		function CreateUnits(map, Number, markers) {
 			//создание необходимого количества юнитов
-			for (var i = 0; i &lt; Number; i++) {
+			for (var j = markers.length, i = 0; i &lt; Number; i++, j++) {
 				let x;			//широта
         		let y; 			//долгота
         		let speed;		//гр/сек
@@ -125,59 +166,141 @@
 				
 				position = { lat: x, lng: y}; 
 				if(i &lt; Number/2){
-					speed =  randomInRange(0.00000749, 0.00001748);
-					
+					speed =  randomizeInteger(3,7);
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people"+i,
+					title: "people #"+j +" speed: " + speed + "km/h",
 					icon: icon1,
 					}); 
 				}
 				else{
-					speed =  randomInRange(0.00007494, 0.00017486);
-					
+					speed =  randomizeInteger(30,70);
+
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people"+i,
-					icon: icon2,
+					title: "people #"+j +" speed: " + speed + "km/h",
+					icon: icon1,
 					});
-				}			//объект, содержащий координаты маркера
+				}
+
+				var positionAtRoad =  getRoadsApi(x, y, 1);
+				var latlng = new google.maps.LatLng({lat: positionAtRoad[0], lng: positionAtRoad[1]});
+				marker.setPosition(latlng);
 				markers.push(Item(marker, speed));	//добавление в массив со всеми маркерами
+				view_result.push();
+				NumberOfPointsAtRoad.push(0);
+
+
+
+
+
+
+
+
 			}
-			console.log(markers);
-			console.log(markers.length);
+
+			// console.log(markers);
+			// console.log(markers.length);
 		}
-        
+		
+		/**
+			 * 
+			 * 
+			 */
+		function GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad){
+			view_result[j]=getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2);
+			//console.log("view_result["+j+"]: "+view_result[j]);
+			NumberOfPointsAtRoad[j]=view_result[j].snappedPoints.length;
+			// console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
+		}
+
         /**
          * 
          * 
          */
-		function UnitsMovement(map, Number, markers) {
-			let direction1 = [];	//массив для хранения текущего направления у каждого юнита
-			for (var i = 0; i &lt; Number; i++) {	//начальное направление задается случайным образом
-				direction1.push(randomizeInteger(1,5));
-			}
-			var t1 = 0;	//таймер (текущая секунда)
-			interval1 =  setInterval(function() {
+		function UnitsMovement(map, Number, markers, Speed) {
 
-				t1++;
-
-				//при достигнутом количестве выполнений функции - завершить ее работа
-				if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
-					clearInterval(interval1);
-					flag = 0;
+			if(Speed != 0 ){
+				for(var j = 0; j &lt; Number; j++){
+					markers[j].speed = Speed;
 				}
-				//каждые 100мс изменять позицию всех юнитов в нужном направлении и на нужное расстояние
-				for (var i = 0; i &lt; Number; i++) {
-					if(t1 % 30 == 0){	//менять напрвление случайным образом каждые 30 тиков функции
-						direction1[i] = randomizeInteger(1,5);
+			}
+			for(var j = 0; j &lt; Number; j++){
+				// console.log("Units Movement numb: "+Number);			
+				// console.log("Begin movement!!! unit: "+j+"      lat == "+markers[j].marker.getPosition().lat()+" lng == "+markers[j].marker.getPosition().lng());
+				
+				console.log("speed for unit#"+j+": "+markers[j].speed+" km/h");
+				GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
+				//console.log("view_result["+j+"]: "+view_result[j]);
+				//console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
+			}
+
+			var t=1;
+			var tt = []; //текущая точка в маршруте для каждого юнита
+			currentstep = []; //структура типа [шаг по широте, шаг по долготе]
+			for(var j = 0; j &lt; Number; j++){
+				tt.push(1);
+				var diff = PointsDifference(
+						markers[j].marker.getPosition().lat(),
+						markers[j].marker.getPosition().lng(),
+						view_result[j].snappedPoints[1].location.latitude,
+						view_result[j].snappedPoints[1].location.longitude);
+				var distance = DistanceBetweenTwoPoints(
+						markers[j].marker.getPosition().lat(),
+						markers[j].marker.getPosition().lng(),
+						view_result[j].snappedPoints[1].location.latitude,
+						view_result[j].snappedPoints[1].location.longitude);
+				var beginstep = StepBetweenPoints(diff, markers[j].speed, distance);
+				currentstep.push(Step(beginstep[0], beginstep[1]));
+			}
+			console.log(currentstep);
+
+			interval2 = setInterval(function(){
+				for(j = 0; j &lt; Number; j++){
+					if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
+						clearInterval(interval2);
+						flag = 0;
 					}
 
-					changeMarkerPosition(markers[i].marker, markers[i].marker.getPosition().lat(), markers[i].marker.getPosition().lng(), markers[i].speed, direction1[i]);
+					//если текущая точка по счету для этого юнита равна последней точке в его маршруте, то создай новый маршрут
+					if(tt[j] == NumberOfPointsAtRoad[j]){ 
+						GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
+						tt[j]=1; //
+					}
+					//Если текущая позиция юнита совпадает с преследуемой точкой маршрута, то перейди к достижению следующей точки маршрута
+					if( Math.abs(markers[j].marker.getPosition().lat() - view_result[j].snappedPoints[tt[j]].location.latitude) &lt;= 0.00001 &amp;&amp;
+						Math.abs(markers[j].marker.getPosition().lng() - view_result[j].snappedPoints[tt[j]].location.longitude) &lt;= 0.00001){
+						tt[j]++;
+						//здесь вызови некую функцию рассчета нового шага для текущего юнита
+
+						var diff = PointsDifference(
+							markers[j].marker.getPosition().lat(),
+							markers[j].marker.getPosition().lng(),
+							view_result[j].snappedPoints[tt[j]].location.latitude,
+							view_result[j].snappedPoints[tt[j]].location.longitude);
+						var distance = DistanceBetweenTwoPoints(
+								markers[j].marker.getPosition().lat(),
+								markers[j].marker.getPosition().lng(),
+								view_result[j].snappedPoints[tt[j]].location.latitude,
+								view_result[j].snappedPoints[tt[j]].location.longitude);
+						var newstep = StepBetweenPoints(diff, markers[j].speed, distance);
+						currentstep[j] = Step(newstep[0], newstep[1]);
+
+					}
+					//Иначе перемести юнита на один шаг в соответствии с текущим его личным шагом для его личного расстояния
+					else{
+						setNewPosition(
+							markers[j].marker, 
+							markers[j].marker.getPosition().lat()+currentstep[j].step_lat, 
+							markers[j].marker.getPosition().lng()+currentstep[j].step_lng
+						);
+
+					}
 				}
-			}, 100); //Every 1000ms = 1sec
+				t++;
+			}, 100);
 		}
 
         /**
@@ -218,11 +341,11 @@
 			controlDiv.style.color = "rgb(25,25,25)";
 
 			controlDiv.addEventListener("click", () => {
-				var Number = 20;
+				var Number = 10;
 				var numb = document.getElementById("Number");
 				if(numb.value != 0)
 					Number = numb.value;
-				console.log(numb.value);
+				// console.log(numb.value);
 				var button = document.getElementById("Start");
 				button.removeAttribute("disabled");
 				button.style.color = "rgb(25,25,25)";
@@ -231,6 +354,7 @@
 				button1.removeAttribute("disabled");
 				button1.style.color = "rgb(25,25,25)";
 				CreateUnits(map, Number, markers);
+						
 			});
 		}
 		
@@ -252,6 +376,13 @@
 
 			controlDiv.addEventListener("click", () => {
 
+
+				var Speed = 0;//km/h
+				var Sp = document.getElementById("Speed");
+				if(Sp.value != 0)
+					Speed = Sp.value;
+				// console.log(Sp.value);
+
 				controlDiv.setAttribute("disabled", "");
 				controlDiv.style.color = "rgb(192,192,192)";
 
@@ -268,7 +399,7 @@
 				button2.style.color = "rgb(25,25,25)";
 
 				var Number = markers.length;
-				UnitsMovement(map, Number, markers);
+				UnitsMovement(map, Number, markers, Speed);
 			});
 		}
 
@@ -280,7 +411,7 @@
 		 * @param {Array} interval - указатель на функцию с таймеров, для последующей остановки
 		 * @constructor
 		 */
-		function StopMoving_Button(controlDiv, map, interval){
+		function StopMoving_Button(controlDiv, map, interval,markers){
 
 			controlDiv.id = "Stop";
 			UI_ForButtons(controlDiv);
@@ -305,9 +436,17 @@
 				button2.removeAttribute("disabled");
 				button2.style.color = "rgb(25,25,25)";
 
-				flag = 1;
 
+				var Number = markers.length;
+				// console.log("SUKA "+Number);
 				console.log("ITS BEEN CLICKED: " + flag);
+				for(var j = 0; j &lt; Number; j++){
+					// console.log("ERTYUI "+j);
+					// console.log("End!!! unit: "+j+"      lat == "+markers[j].marker.getPosition().lat()+" lng == "+markers[j].marker.getPosition().lng());
+
+				}
+
+				flag = 1;
 			});
 		}
 
@@ -340,14 +479,15 @@
 				markers[i].marker.setMap(null);
 				}
 			markers.length = 0;
-				
+			view_result.length = 0;
+			NumberOfPointsAtRoad.length = 0;
 			});
 		}
 
 		/**
-		 * 
-		 * 
-		 */
+			 * 
+			 * 
+			 */
 		function getMAP(temp){
 			let URL = "https://geocode-maps.yandex.ru/1.x/?apikey=599d40fb-71b4-47be-b424-072f354f7bb7&amp;geocode=" ;
 			let x = temp[0].replace(/ /g, "").replace("'", "%27");   
@@ -367,26 +507,52 @@
 			console.log(y);
 			console.log(URL1);
 			let way; 
-			$.get(URL1,function(data) {
-		//          
-			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&amp;geocode=&amp;format=json?" + $.param({geocode: "55°01%2715.0%22N%20, 82°57%2721.9%22E"}) ,function(data) {
-				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind
-						console.log(data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind);
-						}, "json");
-
+			$.ajax({
+					url: URL1,
+					method: "GET",
+					async: false
+			}).done(function(data) {
+				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind;
+			});
+		
+			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&amp;geocode=&amp;format=json?" 
 			return way; 
 		}
 
 		/**
-		 * 
-		 * 
-		 */
+			 * 
+			 * 
+			 */
 		function translate_from_lat_lon_to_minutes(lon,lat) {
 			var point = new GeoPoint(lon, lat);
 			return [point.getLonDeg(),point.getLatDeg()];
 		}
 
+		/**
+			 * 
+			 * 
+			 */
+		function PointsDifference(point1_lat, point1_lng, point2_lat, point2_lng){
+			var LatitudeDifference = point2_lat-point1_lat;
+			var LongitudeDifference = point2_lng-point1_lng;
+			return [LatitudeDifference, LongitudeDifference];
+		}
 
+		/**
+			 * 
+			 * 
+			 */
+		function StepBetweenPoints(PointsDifferences, speed_kph, distance){
+			var speed_mps = speed_kph*1000/3600;
+			var step_lat = (PointsDifferences[0])*speed_mps/distance;
+			var step_lng = (PointsDifferences[1])*speed_mps/distance;
+			return [step_lat, step_lng];
+		}
+
+		/**
+			 * 
+			 * 
+			 */
 		function initMap() {
 
 			//параметры карты
@@ -398,14 +564,22 @@
 
 			//создание объекта типа "Карта"
 			var FirstMap = new google.maps.Map(document.getElementById("map"), opt);
+			//TextBox для ввода скорости, по умолчанию будт генерироваться случайным образом
+			const SpeedUnits = document.createElement("input");
+			SpeedUnits.id = "Speed";
+			SpeedUnits.size = "4";
+			SpeedUnits.placeholder = "Speed";
+			UI_ForButtons(SpeedUnits);
+			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
+				SpeedUnits
+			);
 
+			//TextBox для ввода количества юнитов, по умолчанию 10
 			const NumberUnits = document.createElement("input");
 			NumberUnits.id = "Number";
-			NumberUnits.setAttribute("size", "3");
-			NumberUnits.setAttribute("max", "100");
-			NumberUnits.setAttribute("placeholder", "Unit")
+			NumberUnits.size = "4";
+			NumberUnits.placeholder = "Units";
 			UI_ForButtons(NumberUnits);
-			//GeneratePeople_Button(NumberUnits, FirstMap, markers);
 			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
 				NumberUnits
 			);
@@ -428,7 +602,7 @@
 
 			//Кнопка для остановки движения
 			const StopMovement = document.createElement("button");
-			StopMoving_Button(StopMovement, FirstMap, interval1);
+			StopMoving_Button(StopMovement, FirstMap, interval1,markers);
 			FirstMap.controls[google.maps.ControlPosition.TOP_CENTER].push(
 				StopMovement
 			);
@@ -442,54 +616,7 @@
 			);
 			ClearUnits.setAttribute("disabled", "");
 
-
-
-			for (var i = 0; i &lt; NumberBS; i++) {
-				let x;			//широта
-        		let y; 			//долгота
-				var position;	
-				var icon3 = 'https://img.icons8.com/doodle/70/000000/cellular-network.png';
-				x = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
-				y = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
-				
-				position = { lat: x, lng: y}; 
-					
-				var base = new google.maps.Marker({
-				position: position,
-				map: FirstMap,
-				title: "Base Station"+i,
-				icon: icon3,
-				}); 
-				BS.push(Item(base, x));	//добавление в массив со всеми маркерами
-			}
-			console.log(BS);
-			console.log(BS.length);
-
-
-
-			// let x;
-			// let y;
-			// let speed;
-			// var position;
-			// var types = {};
-			// x = randomInRange(55.015465, 55.012316);
-			// y = randomInRange(82.956089, 82.963985);
-			// speed = 0.00002;
-			// position = { lat: x, lng: y};
-			// var marker = new google.maps.Marker({
-			// 	position: position,
-			// 	map: FirstMap,
-			// 	title: "person",
-			// 	icon: icon1
-			// });
-
-			// var temp ;
-			// var way_human;
-			// temp=translate_from_lat_lon_to_minutes(marker.getPosition().lat(), marker.getPosition().lng());
-			// console.log(temp);
-			// way_human = getMAP(temp);
-
-
+		
 			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
 			// markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
 
@@ -497,7 +624,7 @@
 
 			/**
 			 * В планах:
-			 * 
+			 * 	 - 	Место для ввода генерируемого количества юнитов
 			 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
 			 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
 			 * 	 	на него, которая enabled даже при движении
@@ -511,7 +638,8 @@
 
 
 		}
-	  </code></pre>
+			
+</code></pre>
         </article>
     </section>
 
@@ -521,13 +649,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClearUnits_Button.html">ClearUnits_Button</a></li><li><a href="GeneratePeople_Button.html">GeneratePeople_Button</a></li><li><a href="StartMoving_Button.html">StartMoving_Button</a></li><li><a href="StopMoving_Button.html">StopMoving_Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#changeMarkerPosition">changeMarkerPosition</a></li><li><a href="global.html#CreateUnits">CreateUnits</a></li><li><a href="global.html#getMAP">getMAP</a></li><li><a href="global.html#randomInRange">randomInRange</a></li><li><a href="global.html#randomizeInteger">randomizeInteger</a></li><li><a href="global.html#setNewPosition">setNewPosition</a></li><li><a href="global.html#translate_from_lat_lon_to_minutes">translate_from_lat_lon_to_minutes</a></li><li><a href="global.html#UI_ForButtons">UI_ForButtons</a></li><li><a href="global.html#UnitsMovement">UnitsMovement</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClearUnits_Button.html">ClearUnits_Button</a></li><li><a href="GeneratePeople_Button.html">GeneratePeople_Button</a></li><li><a href="StartMoving_Button.html">StartMoving_Button</a></li><li><a href="StopMoving_Button.html">StopMoving_Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CreateUnits">CreateUnits</a></li><li><a href="global.html#DistanceBetweenTwoPoints">DistanceBetweenTwoPoints</a></li><li><a href="global.html#GenerateNewRoad">GenerateNewRoad</a></li><li><a href="global.html#getMAP">getMAP</a></li><li><a href="global.html#getRoadsApi">getRoadsApi</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#PointsDifference">PointsDifference</a></li><li><a href="global.html#rad">rad</a></li><li><a href="global.html#randomInRange">randomInRange</a></li><li><a href="global.html#randomizeInteger">randomizeInteger</a></li><li><a href="global.html#setNewPosition">setNewPosition</a></li><li><a href="global.html#StepBetweenPoints">StepBetweenPoints</a></li><li><a href="global.html#translate_from_lat_lon_to_minutes">translate_from_lat_lon_to_minutes</a></li><li><a href="global.html#UI_ForButtons">UI_ForButtons</a></li><li><a href="global.html#UnitsMovement">UnitsMovement</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Dec 25 2020 08:17:52 GMT+0700 (Новосибирск, стандартное время)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 29 2020 02:04:06 GMT+0700 (Новосибирск, стандартное время)
 </footer>
 
 <script> prettyPrint(); </script>
