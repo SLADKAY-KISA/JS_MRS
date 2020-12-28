@@ -1,5 +1,6 @@
 const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
 		const Item = Struct('marker', 'speed')
+		const Step = Struct('step_lat', 'step_lng')
 		
 		let markers = [];
 		var interval1;
@@ -8,6 +9,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 		
 		let NumberOfPointsAtRoad = [];
 		var view_result = [];
+
 		/**
 
 
@@ -34,6 +36,31 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 		}
 
 		/**
+			 * 
+			 * 
+			 */
+		function rad(x) {
+			return x * Math.PI / 180;
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function DistanceBetweenTwoPoints(marker1, marker2) {
+			var R = 6378137;
+			var dLat = rad(marker2.getPosition().lat() - marker1.getPosition().lat());
+			var dLong = rad(marker2.getPosition().lng() - marker1.getPosition().lng());
+			var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
+			Math.cos(rad(marker1.getPosition().lat())) * Math.cos(rad(marker2.getPosition().lat())) *
+			Math.sin(dLong / 2) * Math.sin(dLong / 2);
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+			var d = R * c;
+			return d;
+			// console.log(d);
+		};
+
+		/**
 		 * Функция установки маркера на новую позицию с координатами широты(х) и долготы(у)
 		 * 
 		 * @param {Object} marker - указатель на структуру, содержащую 
@@ -52,6 +79,10 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			marker.setPosition(latlng);
 		}
 
+		/**
+			 * 
+			 * 
+			 */
 	   function getRoadsApi(x, y, option) {
 		  
 			x1 = randomInRange(55.021465, 55.012316); 	//случайная широта из допустимой области для генерации
@@ -104,7 +135,6 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				position = { lat: x, lng: y}; 
 				if(i < Number/2){
 					speed =  randomizeInteger(3,7);
-					// speed =  randomInRange(3, 7);
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
@@ -113,8 +143,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 					}); 
 				}
 				else{
-					speed =  randomizeInteger(30,70);					
-					// speed =  randomInRange(30, 70);
+					speed =  randomizeInteger(30,70);
 
 					var marker = new google.maps.Marker({
 					position: position,
@@ -152,7 +181,10 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				
 		}
 		
-
+		/**
+			 * 
+			 * 
+			 */
 		function GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad){
 			view_result[j]=getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2);
 			//console.log("view_result["+j+"]: "+view_result[j]);
@@ -175,63 +207,39 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			}
 
 			var t=1;
-			var tt = [];
+			var tt = []; //текущая точка в маршруте для каждого юнита
 			for(var j = 0; j < Number; j++){
 				tt.push(1);
 			}
-			var k = [100, 7000];
-		var j;
 			interval2 = setInterval(function(){
 				for(j = 0; j < Number; j++){
 					if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
 						clearInterval(interval2);
 						flag = 0;
 					}
+					// if(){
+
+
+					// }
+					//если текущая точка по счету для этого юнита равна последней точке в его маршруте, то создай новый маршрут
 					if(tt[j] == NumberOfPointsAtRoad[j]){ 
 						GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
-						tt[j]=1;
+						tt[j]=1; //
 					}
+					// if( markers[j].marker.getPosition().lat() == view_result[j] &&
+					// 	markers[j].marker.getPosition().lng() ==){
+					// 	tt[j]++;
+					// }
+
+
+
+
+
 					oneStep(markers,view_result, j, tt[j]);
-					
-
-// lat1 = markers[j].marker.getPosition().lat();
-					
-// lat2 = markers[j].marker.getPosition().lng();
-					
-// long1 = view_result[j].snappedPoints[tt[j]].location.latitude;
-					
-// long2 = view_result[j].snappedPoints[tt[j]].location.longitude;
-// console.log("before: "+lat1+"**"+lat2+"**"+long1+"**"+long2);
-// var R = 6372795; // Радиус земли
-
-// // Перевод коордитат в радианы
-
-// lat1 *= Math.PI / 180;
-
-// lat2 *= Math.PI / 180;
-
-// long1 *= Math.PI / 180;
-
-// long2 *= Math.PI / 180;
-
-// console.log("after: "+lat1+"**"+lat2+"**"+long1+"**"+long2);
-
-
-
-					// var dist = latlng2distance(
-					// 			markers[j].marker.getPosition().lat(), 
-					// 			markers[j].marker.getPosition().lng(), 
-					// 			view_result[j].snappedPoints[tt[j]].location.latitude, 
-					// 			view_result[j].snappedPoints[tt[j]].location.longitude);
-					// console.log("j: "+j+dist);
-
-
 					tt[j]++;
-
 				}
 				t++;
-			}, 500);
-
+			}, 1000);
 		}
 
         /**
@@ -415,42 +423,10 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			});
 		}
 
-		/*
-			У них за одну секунду маркер перечещается на ds, равное определенному значению для каждого маркера (вычисляется от скорости)
-			
-			Когда на дороге поворот, то шаг маленький между двумя точками маршрута
-			Когда дорога прямая - шаг большой
-			А за 500ms у нас всегда проходится именно один шаг
-
-
-
-
-
-			Есть период интервал 500мс
-			Есть скорость км/ч
-			Сколько шагов одинакового расстояния моно пройти за этот период с такой скоростью
-			мы можем посчитать какое общее расстояние он пройдет за это время с такой скоростью
-
-
-
-
-
-			широта 1 начальная точка
-			долгота 1
-
-			широта 2 конечная точка
-			долгота 2
-
-			р = широта 2 - широта 1 ---- расстояние которое проходится по широте (катет первый)
-			к = долгота 2 - долгота 1 ---- расстояние которое проходится по долготе (катет второй)
-			если мы знаем на сколько шагов продвинемся за время 500мс со скоростью №км/час
-			то можно поделить р и к на это количество шагов и получить свиг по широте и долготе
-			и типо идти кажый шаг на этот сдвиг по широте и долготе
-
-
-		*/
-
-
+		/**
+			 * 
+			 * 
+			 */
 		function getMAP(temp){
 			let URL = "https://geocode-maps.yandex.ru/1.x/?apikey=599d40fb-71b4-47be-b424-072f354f7bb7&geocode=" ;
 			let x = temp[0].replace(/ /g, "").replace("'", "%27");   
@@ -482,13 +458,41 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			return way; 
 		}
 
-
+		/**
+			 * 
+			 * 
+			 */
 		function translate_from_lat_lon_to_minutes(lon,lat) {
 			var point = new GeoPoint(lon, lat);
 			return [point.getLonDeg(),point.getLatDeg()];
 		}
 
-		
+		function PointsDifference(point1_lat, point1_lng, point2_lat, point2_lng){
+			var LatitudeDifference = point2_lat-point1_lat;
+			var LongitudeDifference = point2_lng-point1_lng;
+			return [LatitudeDifference, LongitudeDifference];
+		}
+
+		function StepBetweenPoints(PointsDifferences, speed_kph, distance){
+			var speed_mps = speed_kph*1000/3600;
+			var step_lat = (PointsDifferences[0])*speed_mps/distance;
+			var step_lng = (PointsDifferences[1])*speed_mps/distance;
+			return [step_lat, step_lng];
+		}
+
+
+		/**
+			 * 
+			 * 
+			 */
+		// function (){
+
+		// }
+
+		/**
+			 * 
+			 * 
+			 */
 		function initMap() {
 
 			//параметры карты
@@ -558,20 +562,6 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 
 
 
-				
-
-			// var dist = latlng2distance(
-			// 		markers.marker[j].getPosition.latitude, 
-			// 		markers.marker[j].getPosition.longitude, 
-			// 		view_result[j].snappedPoints[i].location.latitude, 
-			// 		view_result[j].snappedPoints[i].location.longitude);
-
-			// var speed = markers[j].speed*1000/3600;
-
-			// step = [(to[0]-from[0])*(speed/dist), (to[1]-from[1])*(speed/dist)]
-
-
-
 
 
 
@@ -589,7 +579,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
             position: position,
             map: FirstMap,
             title: "1 \nx = "+x+"\n y = "+y,
-            icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
+            icon:  'https://img.icons8.com/plasticine/50/000000/arms-up.png'
 		});
 		console.log(x+"\n"+y);
         x = randomInRange(55.015465, 55.012316);
@@ -599,132 +589,114 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
             position: position,
             map: FirstMap,
             title: "2 \nx = "+x+"\n y = "+y,
-            icon: 'https://img.icons8.com/plasticine/80/000000/person-laying-down.png'
+            icon:  'https://img.icons8.com/plasticine/50/000000/arms-up.png'
+		});
+		console.log(x+"\n"+y);
+		x = randomInRange(55.015465, 55.012316);
+        y = randomInRange(82.956089, 82.963985);
+		position = { lat: x, lng: y};
+        var marker3 = new google.maps.Marker({
+            position: position,
+            map: FirstMap,
+            title: "3 \nx = "+x+"\n y = "+y,
+            icon: 'https://img.icons8.com/plasticine/50/000000/arms-up.png'
+		});
+		console.log(x+"\n"+y);
+		x = randomInRange(55.015465, 55.012316);
+        y = randomInRange(82.956089, 82.963985);
+		position = { lat: x, lng: y};
+        var marker4 = new google.maps.Marker({
+            position: position,
+            map: FirstMap,
+            title: "4 \nx = "+x+"\n y = "+y,
+            icon: 'https://img.icons8.com/plasticine/50/000000/arms-up.png'
 		});
 		console.log(x+"\n"+y);
 
-		var LatitudeDifference = marker2.getPosition().lat()-marker1.getPosition().lat();
-		var LongitudeDifference = marker2.getPosition().lng()-marker1.getPosition().lng();
+		
 
-		console.log("LatDif == "+LatitudeDifference);
-		console.log("LngDif == "+LongitudeDifference);
+		
 
-		var LatStep = LatitudeDifference/7;
-		var LngStep = LongitudeDifference/7;
+		
+		// var LatitudeDifference = marker2_lat-marker1_lat;
+		// var LongitudeDifference = marker2_lng-marker1_lng;
+		// var speed_kph = 5;
+		// var speed_mps = speed_kph*1000/3600;
+		// var distance = DistanceBetweenTwoPoints(marker1, marker2);
+		// var time_s = distance/speed_mps;
+		// var step_lat = (LatitudeDifference)*speed_mps/distance;
+		// var step_lng = (LongitudeDifference)*speed_mps/distance;
+		// var step = [step_lat, step_lng];
+		
+		// console.log(speed_kph+" k/h");
+		// console.log(speed_mps+" m/s");
+		// console.log(distance+" m");
+		// console.log(time_s+" s");
+		// console.log(step_lat+" tm");
+		// console.log(step_lng+" gm");
 
-		console.log("LatDif/5 == "+LatStep);
-		console.log("LngDif/5 == "+LngStep);
+		var Points = [marker1, marker2, marker3,marker4];
+		speedwww = 40;
+		var diffff = [];
+		var steppp = [];
+		var distance = [];
 
-		var speed_kph = 5;
-		var speed_mps = speed_kph*1000/3600;
-		var distance = DistanceBetweenTwoPoints(marker1, marker2);
-		var time_s = distance/speed_mps;
-		var step_lat = (LatitudeDifference)*speed_mps/distance;
-		var step_lng = (LongitudeDifference)*speed_mps/distance;
-		var timestep = Math.abs(step_lat)/speed_mps;
-		var numbSteps = time_s/timestep;
+		for(var i = 1; i < Points.length; i++){
+			diffff.push(PointsDifference(
+					Points[i-1].getPosition().lat(), 
+					Points[i-1].getPosition().lng(), 
+					Points[i].getPosition().lat(), 
+					Points[i].getPosition().lng()));
+			distance.push(DistanceBetweenTwoPoints(Points[i-1], Points[i]));
+			steppp.push(StepBetweenPoints(diffff[i-1], speedwww, distance[i-1]));
+			console.log(diffff[i-1]+"\n"+distance[i-1]+"\n"+steppp[i-1]);
+		}
+		
+		//dist.push(DistanceBetweenTwoPoints(marker1, marker2));
+		// dist.push(DistanceBetweenTwoPoints(marker2, marker3));
+		// console.log("dist: "+dist[0]+"\n"+dist[1]);
+		// console.log(Points.length);
+		// for(var i = 1; i < Points.length; i++){
+		//steps.push(Step((Points[i].getPosition().lat()-Points[i-1].getPosition().lat())*(speed_mps/dist[i-1]), 
+							//(Points[i].getPosition().lng()-Points[i-1].getPosition().lng())*(speed_mps/dist[i-1])));
+			// console.log("step["+i+"]: "+step1);
+		// }
+		// console.log(steps);
+		// console.log("lat: "+steps[0].step_lat);
+		// console.log("lng: "+steps[0].step_lng);
+		// console.log("lat: "+steps[1].step_lat);
+		// console.log("lng: "+steps[1].step_lng);
 
 
-		console.log(speed_kph+" k/h");
-		console.log(speed_mps+" m/s");
-		console.log(distance+" m");
-		console.log(time_s+" s");
-		console.log(step_lat+" tm");
-		console.log(step_lng+" gm");
-		console.log(numbSteps+" steps");
+		/**
+		 * функцию, которая перемещает маркер только между двумя соседними точками, то есть вычисляет шаг для
+		 * этого интервала
+		 * 
+		 */
 
-		var t=0;
-		interval5 = setInterval(function(){
-			//if(t!=0) return;
-
-			console.log(marker1.getPosition().lat()+"\n"+marker2.getPosition().lat()+"\n"+marker1.getPosition().lng()+"\n"+marker2.getPosition().lng());
-			if(marker1.getPosition().lat() == marker2.getPosition().lat() && marker1.getPosition().lng() == marker2.getPosition().lng()){
-				//t=1;
-				clearInterval(interval5);
-				console.log("end");
+		current = 1;
+		interval = setInterval(function(){
+			if(
+					Points[0].getPosition().lat() - Points[current].getPosition().lat() <= 0.00001 && 
+					Points[0].getPosition().lng() - Points[current].getPosition().lng() <= 0.000001
+			){
+				console.log("I'M COME");
+				//clearInterval(interval);
+				current++;
 			}
-
-			setNewPosition(marker1, marker1.getPosition().lat()+step_lat, marker1.getPosition().lng()+step_lng);
-			t++;
-		},100);
-		   
-
-		// var t=0;
-		// var numb = 1;
-		// interval5 = setInterval(function(){
-			
-		// 	LatStep *= (-1);
-		// 	LngStep *= (-1);
-		// 	if(t>=29){
-		// 		clearInterval(interval5);
-		// 		console.log("t end in >=3");
-		// 	}
-		// 	console.log("circle "+t);
-		// 	t++;
-		// 	if(numb != 1) return;
-		// 	interval6 = setInterval(function(){
-		// 		console.log("circle "+t+"step "+numb);
-		// 		if(numb == 7){
-		// 			numb = 0;
-		// 			clearInterval(interval6);
-		// 			console.log("numb end");
-		// 		}
-		// 		setNewPosition(marker1, marker1.getPosition().lat()+LatStep, marker1.getPosition().lng()+LngStep);
-		// 		//console.log("new lat: "+ marker1.getPosition().lat()+"\t new lng: "+marker1.getPosition().lng());
-		// 		numb++;
-		// 	}, 1000);
-		// 	if(t==30) {
-		// 		clearInterval(interval5);
-				
-		// 		console.log("t end in =4");
-		// 		return;
-		// 	}
-		// }, 10000);
-
-
+			if(current == 4){
+				clearInterval(interval);
+			}
+			else{
+				// console.log("cur: "+current);
+				// console.log("cur-1: "+(current-1));
+				// console.log("step_lat: "+(current-1)+"\t"+steps[current-1].step_lat);
+				// console.log("step_lng :"+(current-1)+"\t"+steps[current-1].step_lng);
+				setNewPosition(Points[0], Points[0].getPosition().lat()+steppp[current-1][0], Points[0].getPosition().lng()+steppp[current-1][1]);
+			}
+		}, 100);
 
 		
-		
-			// var i = 0;
-			// var c = 1;
-			// console.log("i begin: "+i);
-			// console.log("c begin: "+c);
-			// // основи таимер
-			// var trtr = setInterval( function() {
-			// 	if (i > 4) {
-			// 		i = 0;
-			// 		clearInterval(trtr);
-			// 	}
-			// 	i++;
-			// 	// внутренни таимер
-			// 	if (c !== 1) return;
-			// 	vnutrenni = setInterval( function fast() {
-			// 		if (c < 100) {
-			// 			c++;
-			// 			console.log("c: "+c);
-			// 		}
-			// 		else {
-			// 			clearInterval(vnutrenni);
-			// 			c = 1;
-			// 		}
-			// 	},10);
-			// 	//конец внутренни таимер
-			// },3000);
-			// //конец основи таимер
-		
-		
-
-
-
-
-		// 	var temp ;
-        //   var way_human;
-        //    temp=translate_from_lat_lon_to_minutes(marker.getPosition().lat(), marker.getPosition().lng());
-        //      console.log(temp);
-        //    way_human = getMAP(temp);
-        //    console.log(way_human);
-
-
 			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
 			// markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
 
@@ -746,67 +718,4 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 
 
 		}
-			function rad(x) {
-				return x * Math.PI / 180;
-			};  
-			function DistanceBetweenTwoPoints(marker1, marker2) {
-				var R = 6378137; // Earth’s mean radius in meter
-				var dLat = rad(marker2.getPosition().lat() - marker1.getPosition().lat());
-				var dLong = rad(marker2.getPosition().lng() - marker1.getPosition().lng());
-				var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-				Math.cos(rad(marker1.getPosition().lat())) * Math.cos(rad(marker2.getPosition().lat())) *
-				Math.sin(dLong / 2) * Math.sin(dLong / 2);
-				var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-				var d = R * c;
-				return d;
-				// console.log(d); // returns the distance in meter
-			};
-
-
-
-
-
-
-
-		function latlng2distance(lat1, long1, lat2, long2) { // Функция вычисления расстояния в метрах по координатам
-
-			var R = 6372795; // Радиус земли
 			
-			// Перевод коордитат в радианы
-			
-			lat1 *= Math.PI / 180;
-			
-			lat2 *= Math.PI / 180;
-			
-			long1 *= Math.PI / 180;
-			
-			long2 *= Math.PI / 180;
-			
-			// Вычисление косинусов и синусов широт и разницы долгот
-			
-			var cl1 = Math.cos(lat1);
-			
-			var cl2 = Math.cos(lat2);
-			
-			var sl1 = Math.sin(lat1);
-			
-			var sl2 = Math.sin(lat2);
-			
-			var delta = long2 - long1;
-			
-			var cdelta = Math.cos(delta);
-			
-			var sdelta = Math.sin(delta);
-			
-			// Вычисления длины большого круга
-			var y = Math.sqrt(Math.pow(cl2 * sdelta, 2) + Math.pow(cl1 * sl2 - sl1 * cl2 * cdelta, 2));
-			
-			var x = sl1 * sl2 + cl1 * cl2 * cdelta;
-			
-			var ad = Math.atan2(y, x);
-			
-			var dist = ad * R; // Расстояние между двумя координатами в метрах
-			
-			return dist
-			
-			}

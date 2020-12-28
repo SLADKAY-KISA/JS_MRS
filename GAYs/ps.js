@@ -357,87 +357,44 @@ function initMarkers(ammount) { // Функция инициализации м�
 
 }
 
-function moveMarkers() // Функция движения маркеров
-
-{
-
-for(var j = 0; j < Markers.length; j++) // В Markers...
-
-{
-
-var step = Somebodies[j].step; // Выгрузка шага
-
-var to = Somebodies[j].to; // Выгрузка назначения
-
-var from = Somebodies[j].from; // Выгрузка точки отправления
-if(step[0] == 0 && step[1] == 0) { // Если шаг нулевой, получаем новый
-
-var dist = latlng2distance(from[0], from[1], to[0], to[1]);
-
-var speed = Somebodies[j].speed*1000/3600;
-
-step = [(to[0]-from[0])*(speed/dist), (to[1]-from[1])*(speed/dist)]
-
-Somebodies[j].step = step;
-
-}
-
-var currentPosition = Markers[j].getPosition(); // Выгрузка текущей позиции
-
-if(Math.abs(currentPosition.lat() - to[0]) < Math.abs(step[0]) && Math.abs(currentPosition.lng() - to[1]) < Math.abs(step[1])) // Если за следующий шаг мы уйдем за место назначения
-
-{
-
-Markers[j].setPosition(new google.maps.LatLng(to[0], to[1])); // Встаем в место назначения
-
-Somebodies[j].from = to; // Выставляем движение из места назначения
-
-Somebodies[j].step = [0, 0]; // Ставим шаг = 0 (для дальнейшего пересчета)
-
-var numFrom, numTo, i; // Переменные для поиска номера точек отправления и назначения в маршруте
-
-for(i = 0; i < route.points.length; i++)
-
-{
-
-    if(from[0] == route.points[i].late && from[1] == route.points[i].lng)
-
-    numFrom = i;
-
-    if(to[0] == route.points[i].late && to[1] == route.points[i].lng)
-
-    numTo = i;
+function moveMarkers(){
+    for(var j = 0; j < Markers.length; j++){
+        var step = Somebodies[j].step; // Выгрузка шага
+        var to = Somebodies[j].to; // Выгрузка назначения
+        var from = Somebodies[j].from; // Выгрузка точки отправления
+        if(step[0] == 0 && step[1] == 0){ // Если шаг нулевой, получаем новый
+            var dist = latlng2distance(from[0], from[1], to[0], to[1]);
+            var speed = Somebodies[j].speed*1000/3600;
+            step = [(to[0]-from[0])*(speed/dist), (to[1]-from[1])*(speed/dist)]
+            Somebodies[j].step = step;
+        }
+        var currentPosition = Markers[j].getPosition(); // Выгрузка текущей позиции
+        if(Math.abs(currentPosition.lat() - to[0]) < Math.abs(step[0]) && Math.abs(currentPosition.lng() - to[1]) < Math.abs(step[1])) // Если за следующий шаг мы уйдем за место назначения
+        {
+            Markers[j].setPosition(new google.maps.LatLng(to[0], to[1])); // Встаем в место назначения
+            Somebodies[j].step = [0, 0]; // Ставим шаг = 0 (для дальнейшего пересчета)
+            var numFrom, numTo, i; // Переменные для поиска номера точек отправления и назначения в маршруте
+            for(i = 0; i < route.points.length; i++)
+            {
+                if(from[0] == route.points[i].late && from[1] == route.points[i].lng)
+                    numFrom = i;
+                if(to[0] == route.points[i].late && to[1] == route.points[i].lng)
+                    numTo = i;
+            }
+            if(numTo == route.points.length-1) // Если мы в конце пути, движемся в сторону начала
+                Somebodies[j].to = [route.points[(route.points.length-2)].late, route.points[(route.points.length-2)].lng];
+            if(numTo == 0) // Если мы в начале пути, движемся в конец
+                Somebodies[j].to = [route.points[1].late, route.points[1].lng];
+            if(numTo > 0 && numTo < (route.points.length-1)) // Если мы не там, и не там
+            {
+                if(numTo > numFrom) // Продолжаем двигаться в конец
+                    Somebodies[j].to = [route.points[numTo+1].late, route.points[numTo+1].lng];
+                else // Продолжаем двигаться в начало
+                    Somebodies[j].to = [route.points[numTo-1].late, route.points[numTo-1].lng];
+            }
+        }
+        else
+            Markers[j].setPosition(new google.maps.LatLng(currentPosition.lat() + step[0], currentPosition.lng() + step[1]));
+    }
 
 }
-
-if(numTo == route.points.length-1) // Если мы в конце пути, движемся в сторону начала
-
-    Somebodies[j].to = [route.points[(route.points.length-2)].late, route.points[(route.points.length-2)].lng];
-
-if(numTo == 0) // Если мы в начале пути, движемся в конец
-
-Somebodies[j].to = [route.points[1].late, route.points[1].lng];
-
-if(numTo > 0 && numTo < (route.points.length-1)) // Если мы не там, и не там
-
-{
-
-if(numTo > numFrom) // Продолжаем двигаться в конец
-
-Somebodies[j].to = [route.points[numTo+1].late, route.points[numTo+1].lng];
-
-else // Продолжаем двигаться в начало
-
-Somebodies[j].to = [route.points[numTo-1].late, route.points[numTo-1].lng];
-
-}
-
-}
-
-else
-
-Markers[j].setPosition(new google.maps.LatLng(currentPosition.lat() + step[0], currentPosition.lng() + step[1])); // Если не выйдем за точку назначения, то просто продолжаем движение
-
-}
-
-}}
