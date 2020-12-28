@@ -47,12 +47,13 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			 * 
 			 * 
 			 */
-		function DistanceBetweenTwoPoints(marker1, marker2) {
+		function DistanceBetweenTwoPoints(point1_lat, point1_lng, point2_lat, point2_lng){
+			//marker1, marker2) {
 			var R = 6378137;
-			var dLat = rad(marker2.getPosition().lat() - marker1.getPosition().lat());
-			var dLong = rad(marker2.getPosition().lng() - marker1.getPosition().lng());
+			var dLat = rad(point2_lat - point1_lat);
+			var dLong = rad(point2_lng - point1_lng);
 			var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
-			Math.cos(rad(marker1.getPosition().lat())) * Math.cos(rad(marker2.getPosition().lat())) *
+			Math.cos(rad(point1_lat)) * Math.cos(rad(point2_lat)) *
 			Math.sin(dLong / 2) * Math.sin(dLong / 2);
 			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 			var d = R * c;
@@ -208,38 +209,72 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 
 			var t=1;
 			var tt = []; //текущая точка в маршруте для каждого юнита
+			currentstep = []; //структура типа [шаг по широте, шаг по долготе]
 			for(var j = 0; j < Number; j++){
 				tt.push(1);
+				var diff = PointsDifference(
+						markers[j].marker.getPosition().lat(),
+						markers[j].marker.getPosition().lng(),
+						view_result[j].snappedPoints[1].location.latitude,
+						view_result[j].snappedPoints[1].location.longitude);
+				var distance = DistanceBetweenTwoPoints(
+						markers[j].marker.getPosition().lat(),
+						markers[j].marker.getPosition().lng(),
+						view_result[j].snappedPoints[1].location.latitude,
+						view_result[j].snappedPoints[1].location.longitude);
+				var beginstep = StepBetweenPoints(diff, markers[j].speed, distance);
+				currentstep.push(Step(beginstep[0], beginstep[1]));
 			}
+			console.log(currentstep);
+
 			interval2 = setInterval(function(){
 				for(j = 0; j < Number; j++){
 					if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
 						clearInterval(interval2);
 						flag = 0;
 					}
-					// if(){
 
-
-					// }
 					//если текущая точка по счету для этого юнита равна последней точке в его маршруте, то создай новый маршрут
 					if(tt[j] == NumberOfPointsAtRoad[j]){ 
 						GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
 						tt[j]=1; //
 					}
-					// if( markers[j].marker.getPosition().lat() == view_result[j] &&
-					// 	markers[j].marker.getPosition().lng() ==){
-					// 	tt[j]++;
-					// }
+					//Если текущая позиция юнита совпадает с преследуемой точкой маршрута, то перейди к достижению следующей точки маршрута
+					if( Math.abs(markers[j].marker.getPosition().lat() - view_result[j].snappedPoints[tt[j]].location.latitude) <= 0.00001 &&
+						Math.abs(markers[j].marker.getPosition().lng() - view_result[j].snappedPoints[tt[j]].location.longitude) <= 0.00001){
+						tt[j]++;
+						//здесь вызови некую функцию рассчета нового шага для текущего юнита
 
 
+						var diff = PointsDifference(
+							markers[j].marker.getPosition().lat(),
+							markers[j].marker.getPosition().lng(),
+							view_result[j].snappedPoints[tt[j]].location.latitude,
+							view_result[j].snappedPoints[tt[j]].location.longitude);
+						var distance = DistanceBetweenTwoPoints(
+								markers[j].marker.getPosition().lat(),
+								markers[j].marker.getPosition().lng(),
+								view_result[j].snappedPoints[tt[j]].location.latitude,
+								view_result[j].snappedPoints[tt[j]].location.longitude);
+						var newstep = StepBetweenPoints(diff, markers[j].speed, distance);
+						currentstep[j] = Step(newstep[0], newstep[1]);
 
+					}
+					//Иначе перемести юнита на один шаг в соответствии с текущим его личным шагом для его личного расстояния
+					else{
+						setNewPosition(
+							markers[j].marker, 
+							markers[j].marker.getPosition().lat()+currentstep[j].step_lat, 
+							markers[j].marker.getPosition().lng()+currentstep[j].step_lng
+						);
 
+					}
 
-					oneStep(markers,view_result, j, tt[j]);
-					tt[j]++;
+					// oneStep(markers,view_result, j, tt[j]);
+					// tt[j]++;
 				}
 				t++;
-			}, 1000);
+			}, 100);
 		}
 
         /**
@@ -555,146 +590,6 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				ClearUnits
 			);
 			ClearUnits.setAttribute("disabled", "");
-
-
-
-
-
-
-
-
-
-
-
-		let x;
-        let y;
-        let speed;
-        var position;
-        var types = {};
-        x = randomInRange(55.015465, 55.012316);
-        y = randomInRange(82.956089, 82.963985);
-        speed = 10;
-        position = { lat: x, lng: y};
-        var marker1 = new google.maps.Marker({
-            position: position,
-            map: FirstMap,
-            title: "1 \nx = "+x+"\n y = "+y,
-            icon:  'https://img.icons8.com/plasticine/50/000000/arms-up.png'
-		});
-		console.log(x+"\n"+y);
-        x = randomInRange(55.015465, 55.012316);
-        y = randomInRange(82.956089, 82.963985);
-		position = { lat: x, lng: y};
-        var marker2 = new google.maps.Marker({
-            position: position,
-            map: FirstMap,
-            title: "2 \nx = "+x+"\n y = "+y,
-            icon:  'https://img.icons8.com/plasticine/50/000000/arms-up.png'
-		});
-		console.log(x+"\n"+y);
-		x = randomInRange(55.015465, 55.012316);
-        y = randomInRange(82.956089, 82.963985);
-		position = { lat: x, lng: y};
-        var marker3 = new google.maps.Marker({
-            position: position,
-            map: FirstMap,
-            title: "3 \nx = "+x+"\n y = "+y,
-            icon: 'https://img.icons8.com/plasticine/50/000000/arms-up.png'
-		});
-		console.log(x+"\n"+y);
-		x = randomInRange(55.015465, 55.012316);
-        y = randomInRange(82.956089, 82.963985);
-		position = { lat: x, lng: y};
-        var marker4 = new google.maps.Marker({
-            position: position,
-            map: FirstMap,
-            title: "4 \nx = "+x+"\n y = "+y,
-            icon: 'https://img.icons8.com/plasticine/50/000000/arms-up.png'
-		});
-		console.log(x+"\n"+y);
-
-		
-
-		
-
-		
-		// var LatitudeDifference = marker2_lat-marker1_lat;
-		// var LongitudeDifference = marker2_lng-marker1_lng;
-		// var speed_kph = 5;
-		// var speed_mps = speed_kph*1000/3600;
-		// var distance = DistanceBetweenTwoPoints(marker1, marker2);
-		// var time_s = distance/speed_mps;
-		// var step_lat = (LatitudeDifference)*speed_mps/distance;
-		// var step_lng = (LongitudeDifference)*speed_mps/distance;
-		// var step = [step_lat, step_lng];
-		
-		// console.log(speed_kph+" k/h");
-		// console.log(speed_mps+" m/s");
-		// console.log(distance+" m");
-		// console.log(time_s+" s");
-		// console.log(step_lat+" tm");
-		// console.log(step_lng+" gm");
-
-		var Points = [marker1, marker2, marker3,marker4];
-		speedwww = 40;
-		var diffff = [];
-		var steppp = [];
-		var distance = [];
-
-		for(var i = 1; i < Points.length; i++){
-			diffff.push(PointsDifference(
-					Points[i-1].getPosition().lat(), 
-					Points[i-1].getPosition().lng(), 
-					Points[i].getPosition().lat(), 
-					Points[i].getPosition().lng()));
-			distance.push(DistanceBetweenTwoPoints(Points[i-1], Points[i]));
-			steppp.push(StepBetweenPoints(diffff[i-1], speedwww, distance[i-1]));
-			console.log(diffff[i-1]+"\n"+distance[i-1]+"\n"+steppp[i-1]);
-		}
-		
-		//dist.push(DistanceBetweenTwoPoints(marker1, marker2));
-		// dist.push(DistanceBetweenTwoPoints(marker2, marker3));
-		// console.log("dist: "+dist[0]+"\n"+dist[1]);
-		// console.log(Points.length);
-		// for(var i = 1; i < Points.length; i++){
-		//steps.push(Step((Points[i].getPosition().lat()-Points[i-1].getPosition().lat())*(speed_mps/dist[i-1]), 
-							//(Points[i].getPosition().lng()-Points[i-1].getPosition().lng())*(speed_mps/dist[i-1])));
-			// console.log("step["+i+"]: "+step1);
-		// }
-		// console.log(steps);
-		// console.log("lat: "+steps[0].step_lat);
-		// console.log("lng: "+steps[0].step_lng);
-		// console.log("lat: "+steps[1].step_lat);
-		// console.log("lng: "+steps[1].step_lng);
-
-
-		/**
-		 * функцию, которая перемещает маркер только между двумя соседними точками, то есть вычисляет шаг для
-		 * этого интервала
-		 * 
-		 */
-
-		current = 1;
-		interval = setInterval(function(){
-			if(
-					Points[0].getPosition().lat() - Points[current].getPosition().lat() <= 0.00001 && 
-					Points[0].getPosition().lng() - Points[current].getPosition().lng() <= 0.000001
-			){
-				console.log("I'M COME");
-				//clearInterval(interval);
-				current++;
-			}
-			if(current == 4){
-				clearInterval(interval);
-			}
-			else{
-				// console.log("cur: "+current);
-				// console.log("cur-1: "+(current-1));
-				// console.log("step_lat: "+(current-1)+"\t"+steps[current-1].step_lat);
-				// console.log("step_lng :"+(current-1)+"\t"+steps[current-1].step_lng);
-				setNewPosition(Points[0], Points[0].getPosition().lat()+steppp[current-1][0], Points[0].getPosition().lng()+steppp[current-1][1]);
-			}
-		}, 100);
 
 		
 			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
