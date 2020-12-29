@@ -1,45 +1,45 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.7) (preloaded format=pdflatex 2020.9.11)  25 DEC 2020 07:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.9.10)  29 DEC 2020 06:01
 entering extended mode
-**./Coursework.tex
-(Coursework.tex
+**C:/Users/vcogu/Desktop/JS_MRS-Kate/report/Coursework.tex
+(C:/Users/vcogu/Desktop/JS_MRS-Kate/report/Coursework.tex
 LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-09-03>
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+L3 programming layer <2020-06-18>
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
-\c@part=\count168
-\c@section=\count169
-\c@subsection=\count170
-\c@subsubsection=\count171
-\c@paragraph=\count172
-\c@subparagraph=\count173
-\c@figure=\count174
-\c@table=\count175
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/extsizes\extsizes.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/extsizes\extsizes.sty
 Package: extsizes 1996/10/08 v1.0 Non Standard LaTeX Package
 
 
 Package ExtSizes Warning: It is better to use one of the extsizes classes,
  if you can.
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/extsizes\size14.clo
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/extsizes\size14.clo
 File: size14.clo 1999/11/11 v1.4a NON-Standard LaTeX file (size option)
 ))
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/cyrillic\t2aenc.def
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/cyrillic\t2aenc.def
 File: t2aenc.def 2005/09/27 v1.0i Cyrillic encoding definition file
 Now handling font encoding T2A ...
 ... processing UTF-8 mapping file for font encoding T2A
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\t2aenc.dfu
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\t2aenc.dfu
 File: t2aenc.dfu 2019/11/14 v1.2k UTF-8 support for inputenc
    defining Unicode char U+00A4 (decimal 164)
    defining Unicode char U+00A7 (decimal 167)
@@ -241,36 +241,36 @@ File: t2aenc.dfu 2019/11/14 v1.2k UTF-8 support for inputenc
 LaTeX Font Info:    Trying to load font information for T2A+cmr on input line 1
 12.
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/cyrillic\t2acmr.fd
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/cyrillic\t2acmr.fd
 File: t2acmr.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 ))
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2018/08/11 v1.3c Input encoding file
 \inpenc@prehook=\toks15
 \inpenc@posthook=\toks16
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
-Package: babel 2020/09/01 3.48 The Babel package
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+Package: babel 2020/06/10 3.45 The Babel package
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.def
-File: babel.def 2020/09/01 3.48 Babel common definitions
-\babel@savecnt=\count176
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.def
+File: babel.def 2020/06/10 3.45 Babel common definitions
+\babel@savecnt=\count175
 \U@D=\dimen135
 \l@babelnohyphens=\language79
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
 \bbl@readstream=\read2
 )
-\bbl@dirlevel=\count177
+\bbl@dirlevel=\count176
 
 *************************************
 * Local config file bblopts.cfg used
 *
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.l
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.l
 df
 Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: \l@canadian = using hyphenrules for english
@@ -280,28 +280,28 @@ Package babel Info: \l@australian = using hyphenrules for ukenglish
 Package babel Info: \l@newzealand = using hyphenrules for ukenglish
 (babel)             (\language73) on input line 108.
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/babel-russian\russianb.
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/babel-russian\russianb.
 ldf
 Language: russian 2017/08/12 1.3j Russian support for the Babel system
 Package babel Info: Making " an active character on input line 120.
 Package babel Info: Default for \cyrdash is provided on input line 157.
 ))
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count178
-\Gm@cntv=\count179
-\c@Gm@tempcnt=\count180
+\Gm@cnth=\count177
+\Gm@cntv=\count178
+\c@Gm@tempcnt=\count179
 \Gm@bindingoffset=\dimen136
 \Gm@wd@mp=\dimen137
 \Gm@odd@mp=\dimen138
@@ -312,19 +312,19 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layoutvoffset=\dimen143
 \Gm@dimlist=\toks18
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
 .sty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
 ty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
@@ -332,47 +332,47 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.s
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/kvsetkeys\kvsetkeys.s
 ty
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
 keys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
 ty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-) (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
+) (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro
 .sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
 )
 \@linkdim=\dimen144
-\Hy@linkcounter=\count181
-\Hy@pagecounter=\count182
- (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+\Hy@linkcounter=\count180
+\Hy@pagecounter=\count181
+ (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count183
+\Hy@SavedSpaceFactor=\count182
 Package hyperref Info: Option `unicode' set `true' on input line 3427.
- (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+ (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2020-05-15 v7.00e Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -384,24 +384,24 @@ Package hyperref Info: Plain pages OFF on input line 4479.
 Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4717.
-\c@Hy@tempcnt=\count184
+\c@Hy@tempcnt=\count183
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 5076.
 \XeTeXLinkMargin=\dimen145
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
 .sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count185
+\Fld@menulength=\count184
 \Field@Width=\dimen146
 \Fld@charsize=\dimen147
 Package hyperref Info: Hyper figures OFF on input line 6347.
@@ -414,29 +414,29 @@ Package hyperref Info: PDF/A mode OFF on input line 6377.
 LaTeX Info: Redefining \ref on input line 6417.
 LaTeX Info: Redefining \pageref on input line 6421.
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/atbegshi\atbegshi.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/atbegshi\atbegshi.sty
 Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
 )
-\Hy@abspage=\count186
-\c@Item=\count187
-\c@Hfootnote=\count188
+\Hy@abspage=\count185
+\c@Item=\count186
+\c@Hfootnote=\count187
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+ (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
 File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/atveryend\atveryend.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/atveryend\atveryend.sty
 Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
 Package atveryend Info: \enddocument detected (standard20110627).
 )
-\Fld@listcount=\count189
-\c@bookmark@seq@number=\count190
+\Fld@listcount=\count188
+\c@bookmark@seq@number=\count189
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
 echeck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
 ounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
@@ -445,109 +445,109 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip49
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
 fg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 105.
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2020/08/26 v1.2 Graphics/color driver for pdftex
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen148
 \Gin@req@width=\dimen149
-) (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/tabto-ltx\tabto.sty
+) (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/tabto-ltx\tabto.sty
 Package: tabto 2018/12/28  v 1.4  Another tabbing mechanism
 \CurrentLineWidth=\dimen150
 \TabPrevPos=\dimen151
-) (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/setspace\setspace.sty
+) (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/setspace\setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
-) (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
+) (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\color.sty
 Package: color 2019/11/23 v1.2a Standard LaTeX Color (DPC)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 147.
-) (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
-\lst@mode=\count191
+) (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+\lst@mode=\count190
 \lst@gtempboxa=\box45
 \lst@token=\toks19
-\lst@length=\count192
+\lst@length=\count191
 \lst@currlwidth=\dimen152
-\lst@column=\count193
-\lst@pos=\count194
+\lst@column=\count192
+\lst@pos=\count193
 \lst@lostspace=\dimen153
 \lst@width=\dimen154
-\lst@newlines=\count195
-\lst@lineno=\count196
+\lst@newlines=\count194
+\lst@lineno=\count195
 \lst@maxwidth=\dimen155
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-\c@lstnumber=\count197
-\lst@skipnumbers=\count198
+\c@lstnumber=\count196
+\lst@skipnumbers=\count197
 \lst@framebox=\box46
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
 File: listings.cfg 2020/03/24 1.8d listings configuration
 ))
 Package: listings 2020/03/24 1.8d (Carsten Heinz)
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.st
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.st
 y
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
- (C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+ (C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count199
+\c@float@type=\count198
 \float@exts=\toks20
 \float@box=\box47
 \@float@everytoks=\toks21
 \@floatcapt=\box48
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \@float@every@algorithm=\toks22
-\c@algorithm=\count266
+\c@algorithm=\count199
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudoc
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudoc
 ode.sty
 Package: algpseudocode 
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmi
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmi
 cx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count267
-\c@ALG@rem=\count268
-\c@ALG@nested=\count269
+\c@ALG@line=\count266
+\c@ALG@rem=\count267
+\c@ALG@nested=\count268
 \ALG@tlm=\skip50
 \ALG@thistlm=\skip51
-\c@ALG@Lnr=\count270
-\c@ALG@blocknr=\count271
-\c@ALG@storecount=\count272
-\c@ALG@tmpcounter=\count273
+\c@ALG@Lnr=\count269
+\c@ALG@blocknr=\count270
+\c@ALG@storecount=\count271
+\c@ALG@tmpcounter=\count272
 \ALG@tmplength=\skip52
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
-tex.def
-File: l3backend-pdftex.def 2020-09-01 L3 backend support: PDF output (pdfTeX)
-\l__kernel_color_stack_int=\count274
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+mode.def
+File: l3backend-pdfmode.def 2020-06-29 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count273
 \l__pdf_internal_box=\box49
-) (Coursework.aux
+) (C:/Users/vcogu/Desktop/JS_MRS-Kate/report\Coursework.aux
 
 LaTeX Warning: Label `fig:mpr' multiply defined.
 
@@ -557,26 +557,26 @@ LaTeX Warning: Label `fig:mpr' multiply defined.
 )
 \openout1 = `Coursework.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -613,57 +613,58 @@ LaTeX Font Info:    ... okay on input line 20.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box50
-Package hyperref Info: Link coloring OFF on input line 20.
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package hyperref Info: Link coloring OFF on input line 35.
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
 lestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count275
+\c@section@level=\count274
 )
-LaTeX Info: Redefining \ref on input line 20.
-LaTeX Info: Redefining \pageref on input line 20.
-LaTeX Info: Redefining \nameref on input line 20.
- (Coursework.out) (Coursework.out)
+LaTeX Info: Redefining \ref on input line 35.
+LaTeX Info: Redefining \pageref on input line 35.
+LaTeX Info: Redefining \nameref on input line 35.
+ (C:/Users/vcogu/Desktop/JS_MRS-Kate/report\Coursework.out)
+(C:/Users/vcogu/Desktop/JS_MRS-Kate/report\Coursework.out)
 \@outlinefile=\write3
 \openout3 = `Coursework.out'.
 
 
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count276
+\scratchcounter=\count275
 \scratchdimen=\dimen156
 \scratchbox=\box51
-\nofMPsegments=\count277
-\nofMParguments=\count278
+\nofMPsegments=\count276
+\nofMParguments=\count277
 \everyMPshowfont=\toks23
-\MPscratchCnt=\count279
+\MPscratchCnt=\count278
 \MPscratchDim=\dimen157
-\MPnumerator=\count280
-\makeMPintoPDFobject=\count281
+\MPnumerator=\count279
+\makeMPintoPDFobject=\count280
 \everyMPtoPDFconversion=\toks24
 )
-(C:\Users\gieko\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+(C:\Users\vcogu\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
 ase.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 )
-\c@lstlisting=\count282
+\c@lstlisting=\count281
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 32.
+(Font)              <14.4> on input line 47.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 32.
+(Font)              <7> on input line 47.
  [1
 
-{C:/Users/gieko/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
-(Coursework.toc)
+{C:/Users/vcogu/AppData/Local/MiKTeX/pdftex/config/pdftex.map}]
+(C:/Users/vcogu/Desktop/JS_MRS-Kate/report\Coursework.toc)
 \tf@toc=\write4
 \openout4 = `Coursework.toc'.
 
@@ -671,7 +672,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.46 \clearpage
+l.61 \clearpage
                 [1
 
 ] [2
@@ -679,31 +680,86 @@ l.46 \clearpage
 ] [3
 
 ]
-<C:/Users/gieko/Desktop/МРС/Л3/images/result1.jpg, id=66, 632.3625pt x 348.
-55219pt>
-File: C:/Users/gieko/Desktop/МРС/Л3/images/result1.jpg Graphic file (type j
-pg)
-<use C:/Users/gieko/Desktop/МРС/Л3/images/result1.jpg>
-Package pdftex.def Info: C:/Users/gieko/Desktop/МРС/Л3/images/result1.jpg  
-used on input line 89.
-(pdftex.def)             Requested size: 497.92325pt x 274.45438pt.
-<C:/Users/gieko/Desktop/МРС/Л3/images/results.jpg, id=67, 1253.68375pt x 15
-3.57375pt>
-File: C:/Users/gieko/Desktop/МРС/Л3/images/results.jpg Graphic file (type j
-pg)
-<use C:/Users/gieko/Desktop/МРС/Л3/images/results.jpg>
-Package pdftex.def Info: C:/Users/gieko/Desktop/МРС/Л3/images/results.jpg  
-used on input line 95.
-(pdftex.def)             Requested size: 497.92325pt x 60.99489pt.
-<C:/Users/gieko/Desktop/МРС/Л3/images/result2.jpg, id=68, 625.58719pt x 425
-.33907pt>
-File: C:/Users/gieko/Desktop/МРС/Л3/images/result2.jpg Graphic file (type j
-pg)
-<use C:/Users/gieko/Desktop/МРС/Л3/images/result2.jpg>
-Package pdftex.def Info: C:/Users/gieko/Desktop/МРС/Л3/images/result2.jpg  
-used on input line 101.
-(pdftex.def)             Requested size: 497.92325pt x 338.55182pt.
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/init_maps.jpg, id=70, 839.3859
+4pt x 580.41844pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/init_maps.jpg Graphic fil
+e (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/init_maps.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/init_m
+aps.jpg  used on input line 102.
+(pdftex.def)             Requested size: 398.3401pt x 275.44478pt.
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generation_1unit.jpg, id=71, 7
+49.80125pt x 569.87906pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generation_1unit.jpg Grap
+hic file (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generation_1unit.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/genera
+tion_1unit.jpg  used on input line 108.
+(pdftex.def)             Requested size: 398.3401pt x 302.7562pt.
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/if_no_number_unit.jpg, id=72, 
+909.3975pt x 620.3175pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/if_no_number_unit.jpg Gra
+phic file (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/if_no_number_unit.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/if_no_
+number_unit.jpg  used on input line 114.
+(pdftex.def)             Requested size: 398.3401pt x 271.71953pt.
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_4kmh.jpg, id=73, 227.3493
+8pt x 158.84344pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_4kmh.jpg Graphic fil
+e (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_4kmh.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_4
+kmh.jpg  used on input line 120.
+(pdftex.def)             Requested size: 398.3401pt x 278.31465pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_65kmh.jpg, id=74, 219.068
+44pt x 131.74219pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_65kmh.jpg Graphic fi
+le (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_65kmh.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_6
+5kmh.jpg  used on input line 126.
+(pdftex.def)             Requested size: 448.12788pt x 269.49828pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/movement_unit.jpg, id=75, 922.
+19531pt x 587.94656pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/movement_unit.jpg Graphic
+ file (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/movement_unit.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/moveme
+nt_unit.jpg  used on input line 132.
+(pdftex.def)             Requested size: 448.12788pt x 285.70099pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/stop_movement.jpg, id=76, 896.
+59969pt x 550.30594pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/stop_movement.jpg Graphic
+ file (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/stop_movement.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/stop_m
+ovement.jpg  used on input line 138.
+(pdftex.def)             Requested size: 448.12788pt x 275.04314pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generate_new_unit.jpg, id=77, 
+845.40843pt x 622.57594pt>
+File: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generate_new_unit.jpg Gra
+phic file (type jpg)
+<use C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generate_new_unit.jpg>
+Package pdftex.def Info: C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/genera
+te_new_unit.jpg  used on input line 144.
+(pdftex.def)             Requested size: 448.12788pt x 330.00168pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -714,64 +770,75 @@ s been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.106 \clearpage
+l.148 \clearpage
                 pdfTeX warning (ext4): destination with the same identifier (na
 me{figure.2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.106 \clearpage
-                 <C:/Users/gieko/Desktop/МРС/Л3/images/result1.jpg> <C:/Use
-rs/gieko/Desktop/МРС/Л3/images/results.jpg>] [5pdfTeX warning (ext4): desti
-nation with the same identifier (name{figure.3}) has been already used, duplica
-te ignored
+l.148 \clearpage
+                 <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/init_maps.jpg
+> <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generation_1unit.jpg>]
+[5pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) 
+has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.106 \clearpage
-                 <C:/Users/gieko/Desktop/МРС/Л3/images/result2.jpg>]
-[6
+l.148 \clearpage
+                pdfTeX warning (ext4): destination with the same identifier (na
+me{figure.4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.148 \clearpage
+                 <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/if_no_number_
+unit.jpg> <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_4kmh.jpg>]
+[6pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.148 \clearpage
+                pdfTeX warning (ext4): destination with the same identifier (na
+me{figure.6}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.148 \clearpage
+                 <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/unit_65kmh.jp
+g> <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/movement_unit.jpg>]
+[7pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.148 \clearpage
+                pdfTeX warning (ext4): destination with the same identifier (na
+me{figure.8}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.148 \clearpage
+                 <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/stop_movement
+.jpg> <C:/Users/vcogu/Desktop/JS_MRS-Kate/report/image/generate_new_unit.jpg>]
+[8
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 128.
- [7
+! TeX capacity exceeded, sorry [input stack size=5000].
+\zap@space #1 #2->#1
+                    \ifx #2\@empty \else \expandafter \zap@space \fi #2
+l.167 \begin{lstlisting}[language=javascript]
+                                             
+If you really absolutely need more capacity,
+you can ask a wizard to enlarge me.
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 128.
- (Coursework.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 128.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 128.
-
-
-Package rerunfilecheck Warning: File `Coursework.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Coursework.out':
-(rerunfilecheck)             Before: ABB55071797B2AF61328CD49435F7AFF;1017
-(rerunfilecheck)             After:  5DFB7D5ABB91F2BE788051090F431D1A;1498.
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 128.
- ) 
+ 
 Here is how much of TeX's memory you used:
- 12516 strings out of 481199
- 186570 string characters out of 2905595
- 445386 words of memory out of 3000000
- 27923 multiletter control sequences out of 15000+200000
- 540879 words of font info for 38 fonts, out of 3000000 for 9000
+ 12534 strings out of 480790
+ 189185 string characters out of 2897301
+ 766467 words of memory out of 3000000
+ 28340 multiletter control sequences out of 15000+200000
+ 538129 words of font info for 33 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,6n,37p,671b,410s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\gieko\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx17
-28.pk> <C:\Users\gieko\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\la
-bx2074.pk> <C:\Users\gieko\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi60
-0\larm2074.pk> <C:\Users\gieko\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/d
-pi600\labx1440.pk> <C:\Users\gieko\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t
-2a/dpi600\larm1440.pk>
-Output written on Coursework.pdf (8 pages, 199968 bytes).
-PDF statistics:
- 349 PDF objects out of 1000 (max. 8388607)
- 26 named destinations out of 1000 (max. 500000)
- 72 words of extra memory for PDF output out of 10000 (max. 10000000)
-
+ 5000i,6n,6441p,711b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!
