@@ -1,4 +1,32 @@
-const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: coursework.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: coursework.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; return o} , {}))
 		const Item = Struct('marker', 'speed')
 		const Step = Struct('step_lat', 'step_lng')
 		
@@ -18,15 +46,13 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 		 * @return {number} возвращает сгенерированное вещественное число
 		 */
 		function randomInRange(min, max) {
-			return Math.random() < 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
+			return Math.random() &lt; 0.5 ? ((1-Math.random()) * (max-min) + min) : (Math.random() * (max-min) + min);
 		} 
 
 		/**
-		 * Функция для генерации случайного натурального числа из заданного диапазона
-		 * @param {number} min минимальная граница диапазона
-		 * @param {number} max максимальная граница диапазона
-		 * @return {number} возвращает сгенерированное натуральное число
-		 */
+			 * 
+			 * 
+			 */
 		function randomizeInteger(min, max) {
 			if(max == null) {
 				max = (min == null ? Number.MAX_SAFE_INTEGER : min);
@@ -41,35 +67,11 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 		}
 
 		/**
-		 * Функция для перевода заданного числа в значение угла
-		 * @param {number} x число, которое необходимо перевести в радианы
-		 * @return {number} возвращает значение заданного числа в радианах
-		 */
+			 * 
+			 * 
+			 */
 		function rad(x) {
 			return x * Math.PI / 180;
-		}
-
-		
-		
-		function PointsDifference(point1_lat, point1_lng, point2_lat, point2_lng){
-			var LatitudeDifference = point2_lat-point1_lat;
-			var LongitudeDifference = point2_lng-point1_lng;
-			return [LatitudeDifference, LongitudeDifference];
-		}
-
-		
-		function StepBetweenPoints(PointsDifferences, speed_kph, distance){
-			var speed_mps = speed_kph*1000/3600;
-			var step_lat = (PointsDifferences[0])*speed_mps/distance;
-			var step_lng = (PointsDifferences[1])*speed_mps/distance;
-			return [step_lat, step_lng];
-		}
-		
-		function GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad){
-			view_result[j]=getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2);
-			//console.log("view_result["+j+"]: "+view_result[j]);
-			NumberOfPointsAtRoad[j]=view_result[j].snappedPoints.length;
-			// console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
 		}
 
 		/**
@@ -122,8 +124,8 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			let URL_y = y;
 			let URL_x1 = x1;
 			let URL_y1 = y1;
-			let URL_interpolate = "&interpolate=true";
-			let URL_key = "&key=YOUR_KEY";
+			let URL_interpolate = "&amp;interpolate=true";
+			let URL_key = "&amp;key=AIzaSyC6UyUT2h5LiCC2ClU7WUqoQSGq5EPQOSQ";
 			let URL_for_roads1 =  URL_for_roads.concat(URL_x,",",URL_y,"|",URL_x1,",",URL_y1,URL_interpolate,URL_key);
 			var x_setNew_possion ;
 			var y_setNew_possion ;
@@ -152,7 +154,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
          */
 		function CreateUnits(map, Number, markers) {
 			//создание необходимого количества юнитов
-			for (var j = markers.length, i = 0; i < Number; i++, j++) {
+			for (var j = markers.length, i = 0; i &lt; Number; i++, j++) {
 				let x;			//широта
         		let y; 			//долгота
         		let speed;		//гр/сек
@@ -163,12 +165,12 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				y = randomInRange(82.936089, 82.963985); 	//случайная долгота из допустимой области для генерации
 				
 				position = { lat: x, lng: y}; 
-				if(i < Number/2){
+				if(i &lt; Number/2){
 					speed =  randomizeInteger(3,7);
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people #"+j +"\nspeed: " + speed + "km/h",
+					title: "people #"+j +" speed: " + speed + "km/h",
 					icon: icon1,
 					}); 
 				}
@@ -178,7 +180,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 					var marker = new google.maps.Marker({
 					position: position,
 					map: map,
-					title: "people #"+j +"\nspeed: " + speed + "km/h",
+					title: "people #"+j +" speed: " + speed + "km/h",
 					icon: icon1,
 					});
 				}
@@ -190,10 +192,28 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				view_result.push();
 				NumberOfPointsAtRoad.push(0);
 
+
+
+
+
+
+
+
 			}
 
 			// console.log(markers);
 			// console.log(markers.length);
+		}
+		
+		/**
+			 * 
+			 * 
+			 */
+		function GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad){
+			view_result[j]=getRoadsApi(markers[j].marker.getPosition().lat(),markers[j].marker.getPosition().lng(), 2);
+			//console.log("view_result["+j+"]: "+view_result[j]);
+			NumberOfPointsAtRoad[j]=view_result[j].snappedPoints.length;
+			// console.log("view_result["+j+"].snapped: "+view_result[j].snappedPoints.length);
 		}
 
         /**
@@ -203,12 +223,11 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 		function UnitsMovement(map, Number, markers, Speed) {
 
 			if(Speed != 0 ){
-				for(var j = 0; j < Number; j++){
-					markers[j].marker.title = "people #"+j +"\nspeed: " + Speed + "km/h";
+				for(var j = 0; j &lt; Number; j++){
 					markers[j].speed = Speed;
 				}
 			}
-			for(var j = 0; j < Number; j++){
+			for(var j = 0; j &lt; Number; j++){
 				// console.log("Units Movement numb: "+Number);			
 				// console.log("Begin movement!!! unit: "+j+"      lat == "+markers[j].marker.getPosition().lat()+" lng == "+markers[j].marker.getPosition().lng());
 				
@@ -221,7 +240,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			var t=1;
 			var tt = []; //текущая точка в маршруте для каждого юнита
 			currentstep = []; //структура типа [шаг по широте, шаг по долготе]
-			for(var j = 0; j < Number; j++){
+			for(var j = 0; j &lt; Number; j++){
 				tt.push(1);
 				var diff = PointsDifference(
 						markers[j].marker.getPosition().lat(),
@@ -239,45 +258,28 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			console.log(currentstep);
 
 			interval2 = setInterval(function(){
-				for(j = 0; j < Number; j++){
+				for(j = 0; j &lt; Number; j++){
 					if(flag == 1){ //Если была нажата кнопка остановки движения, то остановить движение и снова опустить флаг
 						clearInterval(interval2);
 						flag = 0;
 					}
 
 					//если текущая точка по счету для этого юнита равна последней точке в его маршруте, то создай новый маршрут
-					if(tt[j] == NumberOfPointsAtRoad[j]-1){ 
+					if(tt[j] == NumberOfPointsAtRoad[j]){ 
 						GenerateNewRoad(markers, j, view_result, NumberOfPointsAtRoad);
-						tt[j]=0; //
+						tt[j]=1; //
 					}
+					//Если текущая позиция юнита совпадает с преследуемой точкой маршрута, то перейди к достижению следующей точки маршрута
+					if( Math.abs(markers[j].marker.getPosition().lat() - view_result[j].snappedPoints[tt[j]].location.latitude) &lt;= 0.00001 &amp;&amp;
+						Math.abs(markers[j].marker.getPosition().lng() - view_result[j].snappedPoints[tt[j]].location.longitude) &lt;= 0.00001){
+						tt[j]++;
+						//здесь вызови некую функцию рассчета нового шага для текущего юнита
 
-					var distanceVeryShort = DistanceBetweenTwoPoints(
+						var diff = PointsDifference(
 							markers[j].marker.getPosition().lat(),
 							markers[j].marker.getPosition().lng(),
 							view_result[j].snappedPoints[tt[j]].location.latitude,
 							view_result[j].snappedPoints[tt[j]].location.longitude);
-					var distanceWithStep = DistanceBetweenTwoPoints(
-							markers[j].marker.getPosition().lat(),
-							markers[j].marker.getPosition().lng(),
-							markers[j].marker.getPosition().lng()+currentstep[j].step_lat,
-							markers[j].marker.getPosition().lng()+currentstep[j].step_lng);
-					/*если текущая точка за один шаг перепрыгнет точку на маршруте, 
-					то поставь эту точку вместо "предполагаемого места" на точку маршрута, которую он бы перепрыгнул
-					*/
-					if(distanceVeryShort < distanceWithStep && markers[j].speed > 8)
-					{
-						console.log("We caught bullshit");
-						setNewPosition(
-							markers[j].marker, 
-							view_result[j].snappedPoints[tt[j]].location.latitude, 
-							view_result[j].snappedPoints[tt[j]].location.longitude
-						);
-						tt[j]++;
-						var diff = PointsDifference(
-								markers[j].marker.getPosition().lat(),
-								markers[j].marker.getPosition().lng(),
-								view_result[j].snappedPoints[tt[j]].location.latitude,
-								view_result[j].snappedPoints[tt[j]].location.longitude);
 						var distance = DistanceBetweenTwoPoints(
 								markers[j].marker.getPosition().lat(),
 								markers[j].marker.getPosition().lng(),
@@ -286,41 +288,16 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 						var newstep = StepBetweenPoints(diff, markers[j].speed, distance);
 						currentstep[j] = Step(newstep[0], newstep[1]);
 
-
-
-						
 					}
+					//Иначе перемести юнита на один шаг в соответствии с текущим его личным шагом для его личного расстояния
 					else{
-						//Если текущая позиция юнита совпадает с преследуемой точкой маршрута, то перейди к достижению следующей точки маршрута
-						if( Math.abs(markers[j].marker.getPosition().lat() - view_result[j].snappedPoints[tt[j]].location.latitude) <= 0.00001 &&
-							Math.abs(markers[j].marker.getPosition().lng() - view_result[j].snappedPoints[tt[j]].location.longitude) <= 0.00001){
-							tt[j]++;
-							//здесь вызови некую функцию рассчета нового шага для текущего юнита
-							var diff = PointsDifference(
-									markers[j].marker.getPosition().lat(),
-									markers[j].marker.getPosition().lng(),
-									view_result[j].snappedPoints[tt[j]].location.latitude,
-									view_result[j].snappedPoints[tt[j]].location.longitude);
-							var distance = DistanceBetweenTwoPoints(
-									markers[j].marker.getPosition().lat(),
-									markers[j].marker.getPosition().lng(),
-									view_result[j].snappedPoints[tt[j]].location.latitude,
-									view_result[j].snappedPoints[tt[j]].location.longitude);
-							var newstep = StepBetweenPoints(diff, markers[j].speed, distance);
-							currentstep[j] = Step(newstep[0], newstep[1]);
+						setNewPosition(
+							markers[j].marker, 
+							markers[j].marker.getPosition().lat()+currentstep[j].step_lat, 
+							markers[j].marker.getPosition().lng()+currentstep[j].step_lng
+						);
 
-						}
-						//Иначе перемести юнита на один шаг в соответствии с текущим его личным шагом для его личного расстояния
-						else{
-							setNewPosition(
-									markers[j].marker, 
-									markers[j].marker.getPosition().lat()+currentstep[j].step_lat, 
-									markers[j].marker.getPosition().lng()+currentstep[j].step_lng
-							);
-
-						}
 					}
-					console.log(tt[j]);
 				}
 				t++;
 			}, 100);
@@ -463,7 +440,7 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				var Number = markers.length;
 				// console.log("SUKA "+Number);
 				console.log("ITS BEEN CLICKED: " + flag);
-				for(var j = 0; j < Number; j++){
+				for(var j = 0; j &lt; Number; j++){
 					// console.log("ERTYUI "+j);
 					// console.log("End!!! unit: "+j+"      lat == "+markers[j].marker.getPosition().lat()+" lng == "+markers[j].marker.getPosition().lng());
 
@@ -498,13 +475,78 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 				button1.setAttribute("disabled", "");
 				button1.style.color = "rgb(192,192,192)"
 
-			for (let i = 0; i < markers.length; i++) {
+			for (let i = 0; i &lt; markers.length; i++) {
 				markers[i].marker.setMap(null);
 				}
 			markers.length = 0;
 			view_result.length = 0;
 			NumberOfPointsAtRoad.length = 0;
 			});
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function getMAP(temp){
+			let URL = "https://geocode-maps.yandex.ru/1.x/?apikey=599d40fb-71b4-47be-b424-072f354f7bb7&amp;geocode=" ;
+			let x = temp[0].replace(/ /g, "").replace("'", "%27");   
+			// https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&amp;geocode=55°01%2715.0%22N%2082°57%2721.9%22E&amp;format=json",function(data) {
+			x=x.concat("N");
+			
+			let y = temp[1].replace(/ /g, "").replace("'", "%27");
+			
+			y=y.concat("E");
+			let format ="&amp;format=json";
+		//55°01%2715.0%22N%20, 82°57%2721.9%22E"
+			// let xx = "56°01'55.7"N 92°49'19.7"E"; 56°01%2755.7"N%2092°49%2719.7"E
+		// https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&amp;geocode=55°01%2715.0%22N%2082°57%2721.9%22E&amp;format=json",function(data) {
+		//           
+			let URL1 = URL.concat(x,"%20",y,format);
+			console.log(x);
+			console.log(y);
+			console.log(URL1);
+			let way; 
+			$.ajax({
+					url: URL1,
+					method: "GET",
+					async: false
+			}).done(function(data) {
+				way = data.response.GeoObjectCollection.featureMember[0].GeoObject.metaDataProperty.GeocoderMetaData.kind;
+			});
+		
+			// $.get("https://geocode-maps.yandex.ru/1.x/?apikey=197f1a96-6ccc-4845-aa21-7bd5de550213&amp;geocode=&amp;format=json?" 
+			return way; 
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function translate_from_lat_lon_to_minutes(lon,lat) {
+			var point = new GeoPoint(lon, lat);
+			return [point.getLonDeg(),point.getLatDeg()];
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function PointsDifference(point1_lat, point1_lng, point2_lat, point2_lng){
+			var LatitudeDifference = point2_lat-point1_lat;
+			var LongitudeDifference = point2_lng-point1_lng;
+			return [LatitudeDifference, LongitudeDifference];
+		}
+
+		/**
+			 * 
+			 * 
+			 */
+		function StepBetweenPoints(PointsDifferences, speed_kph, distance){
+			var speed_mps = speed_kph*1000/3600;
+			var step_lat = (PointsDifferences[0])*speed_mps/distance;
+			var step_lng = (PointsDifferences[1])*speed_mps/distance;
+			return [step_lat, step_lng];
 		}
 
 		/**
@@ -574,5 +616,49 @@ const Struct = (...keys) => ((...v) => keys.reduce((o, k, i) => {o[k] = v[i]; re
 			);
 			ClearUnits.setAttribute("disabled", "");
 
+		
+			// FirstMap.openInfoWindow(map.getCenter(), document.createTextNode("Hello, world")); 
+			// markers[0].marker.openInfoWindowHtml('Москва – лучший город земли!');
+
+
+
+			/**
+			 * В планах:
+			 * 	 - 	Место для ввода генерируемого количества юнитов
+			 * 	 - 	Определение области генерации юнитов путем тыка четырех точек на карте
+			 * 	 - 	Выбор определенного юнита путем тыка и вывод всплывающей характеристики (номер, скорость, текущие координаты мб) 
+			 * 	 	на него, которая enabled даже при движении
+			 * 	 -	Ну есессна ограничение дорогами
+			 * 	 -	Генериться юниты будут случайно, но планируется определять ближайшую дорогу, мувиться на нее 
+			 * 		и только потом отображаться на карте
+			 * 	 -	Хотелось бы адекватное движение, а не вправо-влево-вверх-вниз
+			 * 
+			 * *******	ПО МЕРЕ ВЫПОЛНЕНИЯ ВОЗМОЖНЫ ИЗМЕНЕНИЯ	*******
+			 */
+
+
 		}
 			
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ClearUnits_Button.html">ClearUnits_Button</a></li><li><a href="GeneratePeople_Button.html">GeneratePeople_Button</a></li><li><a href="StartMoving_Button.html">StartMoving_Button</a></li><li><a href="StopMoving_Button.html">StopMoving_Button</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CreateUnits">CreateUnits</a></li><li><a href="global.html#DistanceBetweenTwoPoints">DistanceBetweenTwoPoints</a></li><li><a href="global.html#GenerateNewRoad">GenerateNewRoad</a></li><li><a href="global.html#getMAP">getMAP</a></li><li><a href="global.html#getRoadsApi">getRoadsApi</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#PointsDifference">PointsDifference</a></li><li><a href="global.html#rad">rad</a></li><li><a href="global.html#randomInRange">randomInRange</a></li><li><a href="global.html#randomizeInteger">randomizeInteger</a></li><li><a href="global.html#setNewPosition">setNewPosition</a></li><li><a href="global.html#StepBetweenPoints">StepBetweenPoints</a></li><li><a href="global.html#translate_from_lat_lon_to_minutes">translate_from_lat_lon_to_minutes</a></li><li><a href="global.html#UI_ForButtons">UI_ForButtons</a></li><li><a href="global.html#UnitsMovement">UnitsMovement</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Dec 29 2020 02:04:06 GMT+0700 (Новосибирск, стандартное время)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
